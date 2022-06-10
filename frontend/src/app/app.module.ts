@@ -5,11 +5,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { EvaluationComponent } from './components/evaluation/evaluation.component';
 import { ProductsComponent } from './components/products/products.component';
 import { DepartmentsComponent } from './components/departments/departments.component';
 import { DesignationsComponent } from './components/designations/designations.component';
 import { TasksComponent } from './components/tasks/tasks.component';
+import { EmployeesAddComponent } from './components/employees/employees-add/employees-add.component';
+import { EmployeesListComponent } from './components/employees/employees-list/employees-list.component';
+import { UsersAddComponent } from './components/users/users-add/users-add.component';
+import { UsersListComponent } from './components/users/users-list/users-list.component';
+import { EvaluationComponent } from './components/evaluation/evaluation.component';
+import { EvaluatorAddComponent } from './components/evaluator/evaluator-add/evaluator-add.component';
+import { EvaluatorListComponent } from './components/evaluator/evaluator-list/evaluator-list.component';
 
 @NgModule({
   declarations: [
@@ -18,9 +24,15 @@ import { TasksComponent } from './components/tasks/tasks.component';
     DashboardComponent,
     DesignationsComponent,
     TasksComponent,
-    EvaluationComponent,
     ProductsComponent,
-    DepartmentsComponent
+    DepartmentsComponent,
+    EmployeesAddComponent,
+    EmployeesListComponent,
+    UsersAddComponent,
+    UsersListComponent,
+    EvaluationComponent,
+    EvaluatorListComponent,
+    EvaluatorAddComponent,
   ],
   imports: [
     BrowserModule,
