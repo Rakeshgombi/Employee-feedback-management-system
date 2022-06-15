@@ -3,4 +3,4 @@
 This project is built with FastAPI and AngularJS
 
 <!-- Insert Image -->
-![alt text](./under-construction.jpg)
+![Website Under Construction](./construction.png)
