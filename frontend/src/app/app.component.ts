@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'employee-feedback-management-system';
-  viewMode = 'dashboard';
+  pageTitle: String = "";
+
+  setDocTitle(name: String) {
+    this.pageTitle = name;
+    console.log(name);
+    
+  }
 }

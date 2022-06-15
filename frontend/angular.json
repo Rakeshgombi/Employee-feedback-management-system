@@ -71,7 +71,8 @@
               "browserTarget": "employee-feedback-management-system:build:production"
             },
             "development": {
-              "browserTarget": "employee-feedback-management-system:build:development"
+              "browserTarget": "employee-feedback-management-system:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

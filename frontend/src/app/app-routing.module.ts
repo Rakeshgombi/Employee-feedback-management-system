@@ -12,6 +12,7 @@ import { ProductsComponent } from './components/products/products.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { UsersAddComponent } from './components/users/users-add/users-add.component';
 import { UsersListComponent } from './components/users/users-list/users-list.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -26,7 +27,9 @@ const routes: Routes = [
   { path: 'evaluator-list', component: EvaluatorListComponent },
   { path: 'users-add', component: UsersAddComponent },
   { path: 'users-list', component: UsersListComponent },
+  { path: '**', component: NotFoundComponent },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

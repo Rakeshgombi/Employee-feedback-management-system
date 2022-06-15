@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-sidenav',
@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent implements OnInit {
-
+  @Output() setDocTitle = new EventEmitter();
   constructor() { }
 
   ngOnInit(): void {
   }
-
+  setHeading(pageTitle: String) {    
+    this.setDocTitle.emit(pageTitle);
+  }
 }

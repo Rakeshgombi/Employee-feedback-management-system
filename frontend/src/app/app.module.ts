@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
@@ -16,6 +16,8 @@ import { UsersListComponent } from './components/users/users-list/users-list.com
 import { EvaluationComponent } from './components/evaluation/evaluation.component';
 import { EvaluatorAddComponent } from './components/evaluator/evaluator-add/evaluator-add.component';
 import { EvaluatorListComponent } from './components/evaluator/evaluator-list/evaluator-list.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { DashboardService } from './components/services/dashboard.service';
 
 @NgModule({
   declarations: [
@@ -33,12 +35,15 @@ import { EvaluatorListComponent } from './components/evaluator/evaluator-list/ev
     EvaluationComponent,
     EvaluatorListComponent,
     EvaluatorAddComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
   ],
-  providers: [],
+
+  providers: [DashboardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
