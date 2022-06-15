@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DashboardService } from '../services/dashboard.service';
+import { GetAllEntitiesService } from '../services/getallentities.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -13,7 +13,7 @@ export class DashboardComponent implements OnInit {
   employees;
   evaluators;
   tasklist;
-  constructor(private service: DashboardService) { }
+  constructor(private service: GetAllEntitiesService) { }
 
   ngOnInit(): void {
     this.service.getDepartments()
@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
           this.designations = Object.keys(v).length;
           console.log(this.designations);
         },
-        error: (e) => console.log(e),
+        error: (e) => console.log(e), 
         complete: () => console.log('Complete')
       })
       

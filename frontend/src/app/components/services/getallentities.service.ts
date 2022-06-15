@@ -5,7 +5,7 @@ import { HttpClient } from "@angular/common/http";
   providedIn: 'root'
 })
 
-export class DashboardService {
+export class GetAllEntitiesService {
   private departmentsUrl = "http://127.0.0.1:8000/departments";
   private designationsUrl = "http://127.0.0.1:8000/designations";
   private usersUrl = "http://127.0.0.1:8000/users";

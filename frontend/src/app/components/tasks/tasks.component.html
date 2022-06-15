@@ -1,1 +1,51 @@
-<p>tasks works!</p>
+<div class="row  p-2  d-flex justify-content-center align-items-center">
+  <div class="w-100 p-2 border-bottom">
+    <button type="button" class="btn btn-outline-secondary"><i class="bi bi-plus-lg"></i> Add New Task</button>
+  </div>
+  <div class="table mw-10 h-100">
+    <div class="table-responsive">
+      <table class="table table-striped text-sm ">
+        <thead>
+          <tr>
+            <th scope="col" style="max-width: 400px !important;">Sl No.</th>
+            <th scope="col">Task</th>
+            <th scope="col">Due Date</th>
+            <th scope="col">Assigned To</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of tasklist;  index as i; trackBy: trackByFn">
+            <th scope="row">{{task.id}}</th>
+            <td style="max-width: 400px !important;">
+              <p class="fw-bold p-0 m-0">{{task.task}}</p>
+              <p class="fst-italic p-0 m-0 fs-6 text-sm"><small class="d-inline-block text-truncate"
+                  style="max-width: 400px;" title="Task Description">{{ task.description}}</small></p>
+            </td>
+            <td>{{ task.due_date | date}}</td>
+            <!-- <td>{{ getEmployeeNameById(task.id) | async }}</td> -->
+            <td>
+              <span class="badge rounded-pill bg-warning">Warning</span>
+            </td>
+            <td>
+              <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle btn-sm " type="button" id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  Action
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a class="dropdown-item" href="#">View Task</a></li>
+                  <li><a class="dropdown-item" href="#">Edit</a></li>
+                  <li><a class="dropdown-item" href="#">Edit</a></li>
+                  <li><a class="dropdown-item" href="#">View Progress</a></li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

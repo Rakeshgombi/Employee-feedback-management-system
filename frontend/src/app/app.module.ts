@@ -17,7 +17,7 @@ import { EvaluationComponent } from './components/evaluation/evaluation.componen
 import { EvaluatorAddComponent } from './components/evaluator/evaluator-add/evaluator-add.component';
 import { EvaluatorListComponent } from './components/evaluator/evaluator-list/evaluator-list.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { DashboardService } from './components/services/dashboard.service';
+import { GetAllEntitiesService } from './components/services/getallentities.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { DashboardService } from './components/services/dashboard.service';
     SidenavComponent,
     DashboardComponent,
     DesignationsComponent,
-    TasksComponent,
+    TasksComponent, 
     ProductsComponent,
     DepartmentsComponent,
     EmployeesAddComponent,
@@ -43,7 +43,7 @@ import { DashboardService } from './components/services/dashboard.service';
     HttpClientModule,
   ],
 
-  providers: [DashboardService],
+  providers: [GetAllEntitiesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
