@@ -36,14 +36,14 @@ export class TasksComponent implements OnInit {
   //     })
   // }
 
-  getEmployeeNameById(id: number): Observable<string> {
-    return this.employeesService.getEmployeeNameById(id).pipe(
-      map(x => x["first_name"] + " " + x["last_name"])
-    )
-  }
-  trackByFn(index, task) {
-    return task.id;
-  }
+  // getEmployeeNameById(id: number): Observable<string> {
+  //   return this.employeesService.getEmployeeNameById(id).pipe(
+  //     map(x => x["first_name"] + " " + x["last_name"])
+  //   )
+  // }
+  // trackByFn(index, task) {
+  //   return task.id;
+  // }
 }
 
 
