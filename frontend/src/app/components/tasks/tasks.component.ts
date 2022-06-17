@@ -2,21 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, map, shareReplay } from 'rxjs';
 import { AppError } from '../common/app-error';
 import { NotFoundError } from '../common/not-found-error';
-import { employeesService } from '../services/employees.service';
-import { GetAllEntitiesService } from '../services/getallentities.service';
+import { TasksService } from '../services/tasks.service';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
+
 export class TasksComponent implements OnInit {
   tasklist;
   employeeName
-  constructor(private getAllEntitiesservice: GetAllEntitiesService, private employeesService: employeesService) { }
+  constructor(private tasksService: TasksService) { }
 
   ngOnInit(): void {
-    this.getAllEntitiesservice.getTasklist()
+    this.tasksService.getAll()
       .subscribe({
         next: (v) => {
           this.tasklist = v;

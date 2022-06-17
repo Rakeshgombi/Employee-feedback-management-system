@@ -7,9 +7,10 @@ import { DataService } from './data.service';
   providedIn: 'root'
 })
 
-export class EmployeesService extends DataService {
+export class EvaluatorsService extends DataService {
   constructor(_http: HttpClient) {
-    super("http://127.0.0.1:8000/employees/", _http);
+    let evaluatorsUrl = "http://127.0.0.1:8000/evaluators/";
+    super(evaluatorsUrl, _http);
   }
 }
 

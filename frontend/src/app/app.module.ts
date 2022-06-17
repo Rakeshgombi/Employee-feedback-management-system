@@ -17,8 +17,13 @@ import { EvaluationComponent } from './components/evaluation/evaluation.componen
 import { EvaluatorAddComponent } from './components/evaluator/evaluator-add/evaluator-add.component';
 import { EvaluatorListComponent } from './components/evaluator/evaluator-list/evaluator-list.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { GetAllEntitiesService } from './components/services/getallentities.service';
 import { AppErrorHandler } from './components/common/app-error-handler';
+import { DepartmentsService } from './components/services/departments.service';
+import { DesignationsService } from './components/services/designations.service';
+import { UsersService } from './components/services/users.service';
+import { TasksService } from './components/services/tasks.service';
+import { EmployeesService } from './components/services/employees.service';
+import { EvaluatorsService } from './components/services/evaluators.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +50,12 @@ import { AppErrorHandler } from './components/common/app-error-handler';
   ],
 
   providers: [
-    GetAllEntitiesService,
+    DepartmentsService,
+    DesignationsService,
+    UsersService,
+    TasksService,
+    EmployeesService,
+    EvaluatorsService,
     { provide: ErrorHandler, useClass: AppErrorHandler }
   ],
   bootstrap: [AppComponent]

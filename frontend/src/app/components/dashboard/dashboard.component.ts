@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GetAllEntitiesService } from '../services/getallentities.service';
 import { AppError } from '../common/app-error';
 import { NotFoundError } from '../common/not-found-error';
+import { DepartmentsService } from '../services/departments.service';
+import { DesignationsService } from '../services/designations.service';
+import { UsersService } from '../services/users.service';
+import { EmployeesService } from '../services/employees.service';
+import { EvaluatorsService } from '../services/evaluators.service';
+import { TasksService } from '../services/tasks.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -15,10 +20,10 @@ export class DashboardComponent implements OnInit {
   employees;
   evaluators;
   tasklist;
-  constructor(private service: GetAllEntitiesService) { }
+  constructor(private departmentsService: DepartmentsService, private designationsService: DesignationsService, private usersService: UsersService, private employeesService: EmployeesService, private evaluatorsService: EvaluatorsService, private tasksService: TasksService ) { }
 
   ngOnInit(): void {
-    this.service.getDepartments()
+    this.departmentsService.getAll()
       .subscribe({
         next: (v) => {
           this.departments = Object.keys(v).length;
@@ -32,7 +37,7 @@ export class DashboardComponent implements OnInit {
         complete: () => console.log('Complete')
       })
 
-    this.service.getDesignations()
+    this.designationsService.getAll()
       .subscribe({
         next: (v) => {
           this.designations = Object.keys(v).length;
@@ -46,7 +51,7 @@ export class DashboardComponent implements OnInit {
         complete: () => console.log('Complete')
       })
 
-    this.service.getUsers()
+    this.usersService.getAll()
       .subscribe({
         next: (v) => {
           this.users = Object.keys(v).length;
@@ -60,7 +65,7 @@ export class DashboardComponent implements OnInit {
         complete: () => console.log('Complete')
       })
 
-    this.service.getEmployees()
+    this.employeesService.getAll()
       .subscribe({
         next: (v) => {
           this.employees = Object.keys(v).length;
@@ -74,7 +79,7 @@ export class DashboardComponent implements OnInit {
         complete: () => console.log('Complete')
       })
 
-    this.service.getEvaluators()
+    this.evaluatorsService.getAll()
       .subscribe({
         next: (v) => {
           this.evaluators = Object.keys(v).length;
@@ -88,7 +93,7 @@ export class DashboardComponent implements OnInit {
         complete: () => console.log('Complete')
       })
 
-    this.service.getTasklist()
+    this.tasksService.getAll()
       .subscribe({
         next: (v) => {
           this.tasklist = Object.keys(v).length;
