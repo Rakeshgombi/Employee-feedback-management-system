@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-
+import { AppError } from '../common/app-error';
+import { NotFoundError } from '../common/not-found-error';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,24 +15,72 @@ export class GetAllEntitiesService {
   private employeesUrl = " http://127.0.0.1:8000/employees";
   private evaluatorsUrl = "http://127.0.0.1:8000/evaluators";
   private tasklistUrl = "http://127.0.0.1:8000/tasklist";
-  constructor(private http: HttpClient) { }
+
+  constructor(private _http: HttpClient) { }
 
   getDepartments() {
-    return this.http.get(this.departmentsUrl);
+    return this._http.get(this.departmentsUrl).pipe(
+      catchError((error: Response) => {
+        if (error.status === 404) {
+          return throwError(() => new NotFoundError());
+        }
+        return throwError(() => new AppError(error))
+      })
+    )
   }
+
   getDesignations() {
-    return this.http.get(this.designationsUrl);
+    return this._http.get(this.designationsUrl).pipe(
+      catchError((error: Response) => {
+        if (error.status === 404) {
+          return throwError(() => new NotFoundError());
+        }
+        return throwError(() => new AppError(error))
+      })
+    )
   }
+
   getUsers() {
-    return this.http.get(this.usersUrl);
+    return this._http.get(this.usersUrl).pipe(
+      catchError((error: Response) => {
+        if (error.status === 404) {
+          return throwError(() => new NotFoundError());
+        }
+        return throwError(() => new AppError(error))
+      })
+    )
   }
+
   getEmployees() {
-    return this.http.get(this.employeesUrl);
+    return this._http.get(this.employeesUrl).pipe(
+      catchError((error: Response) => {
+        if (error.status === 404) {
+          return throwError(() => new NotFoundError());
+        }
+        return throwError(() => new AppError(error))
+      })
+    )
   }
+
   getEvaluators() {
-    return this.http.get(this.evaluatorsUrl);
+    return this._http.get(this.evaluatorsUrl).pipe(
+      catchError((error: Response) => {
+        if (error.status === 404) {
+          return throwError(() => new NotFoundError());
+        }
+        return throwError(() => new AppError(error))
+      })
+    )
   }
+
   getTasklist() {
-    return this.http.get(this.tasklistUrl);
+    return this._http.get(this.tasklistUrl).pipe(
+      catchError((error: Response) => {
+        if (error.status === 404) {
+          return throwError(() => new NotFoundError());
+        }
+        return throwError(() => new AppError(error))
+      })
+    )
   }
 }

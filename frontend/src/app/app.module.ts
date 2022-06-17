@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -18,6 +18,7 @@ import { EvaluatorAddComponent } from './components/evaluator/evaluator-add/eval
 import { EvaluatorListComponent } from './components/evaluator/evaluator-list/evaluator-list.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { GetAllEntitiesService } from './components/services/getallentities.service';
+import { AppErrorHandler } from './components/common/app-error-handler';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { GetAllEntitiesService } from './components/services/getallentities.serv
     SidenavComponent,
     DashboardComponent,
     DesignationsComponent,
-    TasksComponent, 
+    TasksComponent,
     ProductsComponent,
     DepartmentsComponent,
     EmployeesAddComponent,
@@ -43,7 +44,10 @@ import { GetAllEntitiesService } from './components/services/getallentities.serv
     HttpClientModule,
   ],
 
-  providers: [GetAllEntitiesService],
+  providers: [
+    GetAllEntitiesService,
+    { provide: ErrorHandler, useClass: AppErrorHandler }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

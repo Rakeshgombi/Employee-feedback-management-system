@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, map, shareReplay } from 'rxjs';
+import { AppError } from '../common/app-error';
+import { NotFoundError } from '../common/not-found-error';
 import { employeesService } from '../services/employees.service';
 import { GetAllEntitiesService } from '../services/getallentities.service';
 
@@ -19,10 +21,16 @@ export class TasksComponent implements OnInit {
         next: (v) => {
           this.tasklist = v;
         },
-        error: (e) => console.log(e),
+        error: (e: AppError) => {
+          if (e instanceof NotFoundError) {
+            alert("Not found");
+          } else throw e;
+        },
         complete: () => console.log('Complete')
       })
   }
+
+
   // getEmployeeNameById(id: number) {
   //   this.employeesService.getEmployeeNameById(id)
   //     .subscribe({
@@ -31,19 +39,19 @@ export class TasksComponent implements OnInit {
   //         this.employeeName = v["first_name"] + " " + v["last_name"];
   //         return this.employeeName;
   //       },
-  //       error: (e) => console.log(e),
+  //       error: (e: AppError) => {
+  //         if (e instanceof NotFoundError) {
+  //           alert("Not found");
+  //         } else throw e;
+  //       },
   //       complete: () => console.log('Complete')
   //     })
   // }
 
-  // getEmployeeNameById(id: number): Observable<string> {
-  //   return this.employeesService.getEmployeeNameById(id).pipe(
-  //     map(x => x["first_name"] + " " + x["last_name"])
-  //   )
-  // }
-  // trackByFn(index, task) {
-  //   return task.id;
-  // }
+  trackByFn(index, task) {
+    return task ? task.id : undefined;
+  }
+
 }
 
 
