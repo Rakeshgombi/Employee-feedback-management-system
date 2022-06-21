@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +12,5 @@ export class AppComponent {
   setDocTitle(name: String) {
     this.pageTitle = name;
     console.log(name);
-    
   }
 }

@@ -1,13 +1,14 @@
-<div class="row vh-100 vw-100 mw-100 p-0 m-0 bg-light">
-  <div class="col-md-2 px-0 col-12">
+<div class="row vh-100 vw-100 min-vh-100 p-0 m-0 bg-light">
+  <div class="col-md-2 px-0 col-12 mh-100">
     <app-sidenav (setDocTitle)="setDocTitle($event)"></app-sidenav>
   </div>
-  <div class="col-md-10 col-12 p-0 vh-100 d-flex align-items-center justify-content-between center flex-column">
-    <div class="p-4 w-100">
+
+  <div class="col-md-10 col-12 p-0 mh-100 d-flex align-items-center justify-content-between flex-column ">
+    <div class="p-4 w-100 mh-100  overflow-hidden">
       <div class="header w-100 border-bottom border-primary">
         <h2>{{pageTitle}}</h2>
       </div>
-      <div class="rounded border-top border-success border-3 w-100  bg-white mt-3">
+      <div class="rounded border-top border-success border-3 mw-100 mh-100 mt-3 bg-white" style="overflow-y: auto; overflow-x: hidden !important;">
         <router-outlet></router-outlet>
       </div>
     </div>
@@ -23,4 +24,5 @@
       </footer>
     </div>
   </div>
+  
 </div>

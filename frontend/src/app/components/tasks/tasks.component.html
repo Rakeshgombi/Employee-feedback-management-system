@@ -1,10 +1,11 @@
-<div class="row  p-2  d-flex justify-content-center align-items-center">
+<div class="rounded  w-100 mh-100 mt-3 overflow-auto">
   <div class="w-100 p-2 border-bottom">
-    <button type="button" class="btn btn-outline-secondary"><i class="bi bi-plus-lg"></i> Add New Task</button>
+    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#addTask">
+      <i class="bi bi-plus-lg"></i> Add New Task</button>
   </div>
-  <div class="table mw-10 h-100">
-    <div class="table-responsive">
-      <table class="table table-striped text-sm ">
+  <div class="table w-100 mh-100  overflow-auto">
+    <div class="d-block  mh-100 w-100">
+      <table class="table table-striped text-sm mh-100 bg- w-100 table-responsive">
         <thead>
           <tr>
             <th scope="col" style="max-width: 400px !important;">Sl No.</th>
@@ -15,19 +16,16 @@
             <th scope="col">Action</th>
           </tr>
         </thead>
-        <tbody>
-          <tr *ngFor="let task of tasklist;  index as i; trackBy: trackByFn">
-            <th scope="row">{{task.id}}</th>
+        <tbody class="overflow-hidden mhh-100 mw-100">
+          <tr *ngFor="let task of tasklist;  index as i; trackBy: trackByFn" class="w-100">
+            <th scope="row">{{ i + 1 }}</th>
             <td style="max-width: 400px !important;">
               <p class="fw-bold p-0 m-0">{{task.task}}</p>
               <p class="fst-italic p-0 m-0 fs-6 text-sm"><small class="d-inline-block text-truncate"
                   style="max-width: 400px;" title="Task Description">{{ task.description}}</small></p>
             </td>
             <td>{{ task.due_date | date}}</td>
-            <td>
-              <!-- {{ getEmployeeNameById(task.id) }} -->
-                <!-- Returns Employee Name -->
-            </td>
+            <td>{{ employees[i] }}</td>
             <td>
               <span class="badge rounded-pill bg-warning">Warning</span>
             </td>
@@ -38,17 +36,77 @@
                   Action
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><a class="dropdown-item" href="#">View Task</a></li>
-                  <li><a class="dropdown-item" href="#">Edit</a></li>
-                  <li><a class="dropdown-item" href="#">Edit</a></li>
-                  <li><a class="dropdown-item" href="#">View Progress</a></li>
+                  <li><a class="dropdown-item" data-bs-toggle="addTask" data-bs-target="#addTask">Edit</a>
+                  </li>
+                  <li><a class="dropdown-item" (click)="deleteTask(task.id)">Delete</a></li>
+                  <li><a class="dropdown-item">View Progress</a></li>
                 </ul>
               </div>
             </td>
           </tr>
-
         </tbody>
       </table>
+      <!-- Button trigger modal -->
+      <div class="modal fade" id="addTask" tabindex="-1" aria-labelledby="addTask" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header py-1">
+              <h3 class="modal-title py-1 m-0" id="exampleModalLabel">
+                <!-- <fa-icon [icon]="faCocktail"></fa-icon> -->
+                Add New Task</h3>
+              <button type="button" class="btn-close py-1 m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="formValue">
+                <div class="mb-2">
+                  <label for="taskName" class="form-label">Task Name</label>
+                  <input type="text" formControlName="task" class="form-control form-control-sm" id="taskName"
+                    aria-describedby="taskName" placeholder="Task Name" required="">
+                </div>
+                <div class="mb-2">
+                  <label for="taskDescription" class="form-label">Task Description</label>
+                  <textarea class="form-control form-control-sm" formControlName="description" id="taskDescription"
+                    rows="1" placeholder="Task Description" required></textarea>
+                </div>
+                <div class="input-group mb-3 input-group-sm">
+                  <label class="input-group-text" for="assignedToSelect">Assigned To</label>
+                  <select class="form-select" id="assignedToSelect" formControlName="employee_id" required="">
+                    <option selected>Choose...</option>
+                    <option [value]="employee.id" *ngFor="let employee of employeeDetails">{{ employee.first_name }} {{
+                      employee.last_name }}
+                    </option>
+                  </select>
+                </div>
+                <div class="mb-2">
+                  <label for="dueDate" class="form-label">Due Date</label>
+                  <input type="date" formControlName="due_date" class="form-control form-control-sm" id="dueDate"
+                    aria-describedby="dueDate" required>
+                </div>
+                <div class="mb-2">
+                  <label for="completedDate" class="form-label">Completed Date</label>
+                  <input type="date" formControlName="completed" class="form-control form-control-sm" id="completedDate"
+                    aria-describedby="completedDate">
+                </div>
+                <div class="input-group mb-3  input-group-sm">
+                  <label class="input-group-text" for="statusSelect" required="">Status</label>
+                  <select class="form-select" id="statusSelect" formControlName="status">
+                    <option selected>Choose...</option>
+                    <option value="1">Pending</option>
+                    <option value="2">Cancelled</option>
+                    <option value="3">Completed</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="addTaskCancel" class="btn btn-sm btn-secondary"
+                data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-sm btn-primary" (click)="postTask()">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

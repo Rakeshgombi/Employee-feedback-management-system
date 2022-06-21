@@ -53,7 +53,7 @@ async def update_tasklist(id: int, new_tasklist: TaskListSchema):
             description=new_tasklist.description,
             employee_id=new_tasklist.employee_id,
             due_date=new_tasklist.due_date,
-            completed=new_tasklist.completed,
+            completed=new_tasklist.completed,   
             status=new_tasklist.status
         )
         last_record_id = await database.execute(query)

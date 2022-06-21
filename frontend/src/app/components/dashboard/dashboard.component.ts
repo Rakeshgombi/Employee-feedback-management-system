@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
   employees;
   evaluators;
   tasklist;
-  constructor(private departmentsService: DepartmentsService, private designationsService: DesignationsService, private usersService: UsersService, private employeesService: EmployeesService, private evaluatorsService: EvaluatorsService, private tasksService: TasksService ) { }
+  constructor(private departmentsService: DepartmentsService, private designationsService: DesignationsService, private usersService: UsersService, private employeesService: EmployeesService, private evaluatorsService: EvaluatorsService, private tasksService: TasksService) { }
 
   ngOnInit(): void {
     this.departmentsService.getAll()
@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
         },
         error: (e: AppError) => {
           if (e instanceof NotFoundError) {
-           alert("Not found");
+            alert("Not found");
           } else throw e;
         },
         complete: () => console.log('Complete')
@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit {
         },
         error: (e: AppError) => {
           if (e instanceof NotFoundError) {
-           alert("Not found");
+            alert("Not found");
           } else throw e;
         },
         complete: () => console.log('Complete')
@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
         },
         error: (e: AppError) => {
           if (e instanceof NotFoundError) {
-           alert("Not found");
+            alert("Not found");
           } else throw e;
         },
         complete: () => console.log('Complete')
@@ -73,7 +73,7 @@ export class DashboardComponent implements OnInit {
         },
         error: (e: AppError) => {
           if (e instanceof NotFoundError) {
-           alert("Not found");
+            alert("Not found");
           } else throw e;
         },
         complete: () => console.log('Complete')
@@ -87,7 +87,7 @@ export class DashboardComponent implements OnInit {
         },
         error: (e: AppError) => {
           if (e instanceof NotFoundError) {
-           alert("Not found");
+            alert("Not found");
           } else throw e;
         },
         complete: () => console.log('Complete')
@@ -101,13 +101,11 @@ export class DashboardComponent implements OnInit {
         },
         error: (e: AppError) => {
           if (e instanceof NotFoundError) {
-           alert("Not found");
+            alert("Not found");
           } else throw e;
         },
         complete: () => console.log('Complete')
       })
-
-
   }
 
 }

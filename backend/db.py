@@ -71,8 +71,7 @@ EmployeeList = Table(
 
 
 class TaskListOptions(enum.Enum):
-    pending = 0
-    onProgress = 1
+    pending = 1
     cancelled = 2
     completed = 3
 
