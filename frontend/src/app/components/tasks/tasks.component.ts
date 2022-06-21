@@ -19,7 +19,7 @@ export class TasksComponent implements OnInit {
   employeeDetails;
   employees = [];
   bodyText: string;
-  formValue !: FormGroup;
+  formValue: FormGroup;
   taskModelObject: TaskModel = new TaskModel();
   constructor(private tasksService: TasksService, private employeesService: EmployeesService, private formbuilder: FormBuilder) { }
   getAll: any;
@@ -90,12 +90,13 @@ export class TasksComponent implements OnInit {
           }
           else throw e;
         },
-        complete: () => {console.log('Complete')
-        this.formValue.reset();
-        let ref = document.getElementById('addTaskCancel');
-        ref?.click()
-        this.ngOnInit()
-      }
+        complete: () => {
+          console.log('Complete')
+          this.formValue.reset();
+          let ref = document.getElementById('addTaskCancel');
+          ref?.click()
+          this.ngOnInit()
+        }
       })
   }
 
