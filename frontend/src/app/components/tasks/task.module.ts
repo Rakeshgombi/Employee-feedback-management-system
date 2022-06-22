@@ -1,5 +1,5 @@
 export class TaskModel {
-  // id: 0;
+  id: number = 0;
   task: string = '';
   description: string = '';
   employee_id: number = 0;

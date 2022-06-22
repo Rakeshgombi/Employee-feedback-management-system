@@ -1,7 +1,8 @@
 <div class="rounded  w-100 mh-100 mt-3 overflow-auto">
   <div class="w-100 p-2 border-bottom">
     <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#addTask">
-      <i class="bi bi-plus-lg"></i> Add New Task</button>
+      <fa-icon [icon]="faAdd"></fa-icon> Add New Task
+    </button>
   </div>
   <div class="table w-100 mh-100  overflow-auto">
     <div class="d-block  mh-100 w-100">
@@ -21,13 +22,21 @@
             <th scope="row">{{ i + 1 }}</th>
             <td style="max-width: 400px !important;">
               <p class="fw-bold p-0 m-0">{{task.task}}</p>
-              <p class="fst-italic p-0 m-0 fs-6 text-sm"><small class="d-inline-block text-truncate"
-                  style="max-width: 400px;" title="Task Description">{{ task.description}}</small></p>
+              <p class="fst-italic p-0 m-0 fs-6 text-sm"><small class="d-inline-block text-truncate taskDesc"
+                  style="max-width: 400px;" title='{{ task.description}}'>{{ task.description}}</small></p>
             </td>
             <td>{{ task.due_date | date}}</td>
             <td>{{ employees[i] }}</td>
-            <td>
-              <span class="badge rounded-pill bg-warning">Warning</span>
+            <td class="">
+              <span class="badge rounded-pill text-center me-1" [class]="task.completed ? 'bg-success': 'bg-warning'">
+                <fa-icon [icon]='task.completed ? faCheck: faTriangleExclamation' class="fa-thin"></fa-icon> {{
+                task.completed ? 'Completed': 'Pending'}}
+              </span>
+              <span class="badge rounded-pill text-center"
+                [class]="task.completed ? ((task.completed < task.due_date)  ? 'bg-success': 'bg-danger'): (task.due_date < currentDate) ? 'bg-danger': ''">
+                <fa-icon [icon]='task.completed ? faCheck: faCircleExclamation' class="fa-thin"></fa-icon>
+                {{ task.completed ? ((task.completed < task.due_date) ? 'On-Time' : 'Overdue' ): (task.due_date <
+                  currentDate) ? 'Overdue' : '' }} </span>
             </td>
             <td>
               <div class="dropdown">
@@ -36,10 +45,16 @@
                   Action
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><a class="dropdown-item" data-bs-toggle="addTask" data-bs-target="#addTask">Edit</a>
+                  <li><a class="dropdown-item" role="button" data-bs-toggle="modal" data-bs-target="#addTask" (click)="onEditTask(task)">
+                      <fa-icon [icon]="faPencil"></fa-icon> Edit
+                    </a>
                   </li>
-                  <li><a class="dropdown-item" (click)="deleteTask(task.id)">Delete</a></li>
-                  <li><a class="dropdown-item">View Progress</a></li>
+                  <li><a class="dropdown-item" role='button' (click)="deleteTask(task.id)">
+                      <fa-icon [icon]="faTrash"></fa-icon> Delete
+                    </a></li>
+                  <li><a class="dropdown-item" role='button'>
+                      <fa-icon [icon]="faBarsProgress"></fa-icon> View Progress
+                    </a></li>
                 </ul>
               </div>
             </td>
@@ -52,7 +67,6 @@
           <div class="modal-content">
             <div class="modal-header py-1">
               <h3 class="modal-title py-1 m-0" id="exampleModalLabel">
-                <!-- <fa-icon [icon]="faCocktail"></fa-icon> -->
                 Add New Task</h3>
               <button type="button" class="btn-close py-1 m-0" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -101,7 +115,8 @@
             <div class="modal-footer">
               <button type="button" id="addTaskCancel" class="btn btn-sm btn-secondary"
                 data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-sm btn-primary" (click)="postTask()">Save changes</button>
+              <button type="button" class="btn btn-sm btn-primary" (click)="postTask()">Add Task</button>
+              <button type="button" class="btn btn-sm btn-primary" (click)="updateTask()">Update Task</button>
             </div>
           </div>
         </div>

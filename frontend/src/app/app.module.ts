@@ -28,6 +28,7 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { UsersAddComponent } from './components/users/users-add/users-add.component';
 import { UsersListComponent } from './components/users/users-list/users-list.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { UsersListComponent } from './components/users/users-list/users-list.com
     HttpClientModule,
     NgbModule,
     ReactiveFormsModule,
+    FontAwesomeModule,
   ],
 
   providers: [

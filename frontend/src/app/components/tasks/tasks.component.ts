@@ -6,6 +6,7 @@ import { NotFoundError } from '../common/not-found-error';
 import { EmployeesService } from '../services/employees.service';
 import { TasksService } from '../services/tasks.service';
 import { TaskModel } from './task.module';
+import { faAdd, faBarsProgress, faCheck, faCircleExclamation, faCoffee, faCross, faPencil, faTrash, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -21,10 +22,23 @@ export class TasksComponent implements OnInit {
   bodyText: string;
   formValue: FormGroup;
   taskModelObject: TaskModel = new TaskModel();
+
+  yourDate = new Date()
+  currentDate = this.yourDate.toISOString().split('T')[0]
+
+  faAdd = faAdd
+  faPencil = faPencil
+  faTrash = faTrash
+  faBarsProgress = faBarsProgress
+  faTriangleExclamation = faTriangleExclamation
+  faCheck = faCheck
+  faCircleExclamation = faCircleExclamation
   constructor(private tasksService: TasksService, private employeesService: EmployeesService, private formbuilder: FormBuilder) { }
   getAll: any;
 
   ngOnInit(): void {
+    console.log(this.currentDate);
+
     this.formValue = this.formbuilder.group({
       task: [''],
       description: [''],
@@ -109,7 +123,7 @@ export class TasksComponent implements OnInit {
         },
         error: (e: AppError) => {
           if (e instanceof NotFoundError) {
-            alert("Not found");
+            alert("Task Not found");
           } else if (e instanceof BadRequestError) {
             alert("Bad request");
           }
@@ -119,6 +133,47 @@ export class TasksComponent implements OnInit {
           console.log('Complete')
         }
       })
+  }
+
+  updateTask() {
+    this.taskModelObject.task = this.formValue.value.task;
+    this.taskModelObject.description = this.formValue.value.description;
+    this.taskModelObject.employee_id = this.formValue.value.employee_id;
+    this.taskModelObject.due_date = this.formValue.value.due_date;
+    this.taskModelObject.completed = this.formValue.value.completed;
+    this.taskModelObject.status = this.formValue.value.status;
+
+    this.tasksService.update(this.taskModelObject.id, this.taskModelObject)
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          alert("Task Updated successfully");
+        },
+        error: (e: AppError) => {
+          if (e instanceof NotFoundError) {
+            alert("Task Not found");
+          } else if (e instanceof BadRequestError) {
+            alert("Bad request");
+          }
+          else throw e;
+        },
+        complete: () => {
+          console.log('Complete')
+          this.formValue.reset();
+          let ref = document.getElementById('addTaskCancel');
+          ref?.click()
+          this.ngOnInit()
+        }
+      })
+  }
+  onEditTask(task: any) {
+    this.taskModelObject.id = task.id
+    this.formValue.controls['task'].setValue(task.task)
+    this.formValue.controls['description'].setValue(task.description)
+    this.formValue.controls['employee_id'].setValue(task.employee_id)
+    this.formValue.controls['due_date'].setValue(task.due_date)
+    this.formValue.controls['completed'].setValue(task.completed)
+    this.formValue.controls['status'].setValue(task.status)
   }
 
   onView(task: any) {
