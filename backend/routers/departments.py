@@ -1,7 +1,7 @@
 
 from typing import List
 
-from db import DepartmentList, database
+from db import DepartmentList, database, EmployeeList
 from fastapi import APIRouter, HTTPException, status
 from inputSchemas import DepartmentListSchemaIn
 from resSchemas import DepartmentListSchema
@@ -55,6 +55,15 @@ async def delete_department(id: int):
     if department is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Department not found")
+
+    employees_query = EmployeeList.select()
+    employees = await database.fetch_all(employees_query)
+
+    department_ids = [employee.department_id for employee in employees]
+
+    if id in department_ids:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Department is assigned to some other table")
 
     query = DepartmentList.delete().where(DepartmentList.c.id == id)
     department = await database.execute(query)

@@ -67,6 +67,7 @@ async def update_evaluator(id: int, new_evaluator: EvaluatorListSchemaIn):
 async def delete_evaluator(id: int):
     evaluator_query = EvaluatorList.select().where(EvaluatorList.c.id == id)
     evaluator = await database.fetch_one(evaluator_query)
+
     if evaluator is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Evaluator not found")
@@ -83,5 +84,6 @@ async def delete_evaluator(id: int):
     if id in evaluator_ids:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Evaluator is assigned to some other table")
+
     query = EvaluatorList.delete().where(EvaluatorList.c.id == id)
     evaluator = await database.execute(query)

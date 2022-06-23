@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import List
 
-from db import EmployeeList, Ratings, TaskList, database
+from db import Ratings, TaskList, database
 from fastapi import APIRouter, HTTPException, status
 from inputSchemas import TaskListSchemaIn
 from resSchemas import TaskListSchema
@@ -30,10 +30,10 @@ async def create_tasklist(new_tasklist: TaskListSchemaIn):
     query = TaskList.insert().values(
         task=new_tasklist.task,
         description=new_tasklist.description,
-        employee_id=new_tasklist.employee_id,
+        employee_id=int(new_tasklist.employee_id),
         due_date=new_tasklist.due_date,
         completed=new_tasklist.completed,
-        status=new_tasklist.status,
+        status=int(new_tasklist.status),
         date_created=str(datetime.now())
     )
     last_record_id = await database.execute(query)
@@ -62,9 +62,9 @@ async def update_tasklist(id: int, new_tasklist: TaskListSchema):
 
 @router.delete("/tasklist/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_tasklist(id: int):
-    evaluator_query = TaskList.select().where(TaskList.c.id == id)
-    evaluator = await database.fetch_one(evaluator_query)
-    if evaluator is None:
+    tasklist_query = TaskList.select().where(TaskList.c.id == id)
+    tasklist = await database.fetch_one(tasklist_query)
+    if tasklist is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
 
@@ -74,11 +74,12 @@ async def delete_tasklist(id: int):
     ratings_query = Ratings.select()
     ratings = await database.fetch_all(ratings_query)
 
-    evaluator_ids = [rating.task_id for rating in ratings]
-    evaluator_ids.append([rating.task_id for rating in ratings])
+    tasklist_ids = [rating.task_id for rating in ratings]
+    tasklist_ids.append([rating.task_id for rating in ratings])
 
-    if id in evaluator_ids:
-        raise HTTPException(
+    if id in tasklist_ids:
+        raise HTTPException( 
             status_code=status.HTTP_400_BAD_REQUEST, detail="This Task is assigned to some other Records")
+
     query = TaskList.delete().where(TaskList.c.id == id)
-    evaluator = await database.execute(query)
+    await database.execute(query)

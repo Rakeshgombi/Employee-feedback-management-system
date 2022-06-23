@@ -1,6 +1,7 @@
 <div class="rounded  w-100 mh-100 mt-3 overflow-auto">
   <div class="w-100 p-2 border-bottom">
-    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#addTask">
+    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#addTask"
+      (click)="addTask()">
       <fa-icon [icon]="faAdd"></fa-icon> Add New Task
     </button>
   </div>
@@ -9,7 +10,7 @@
       <table class="table table-striped text-sm mh-100 bg- w-100 table-responsive">
         <thead>
           <tr>
-            <th scope="col" style="max-width: 400px !important;">Sl No.</th>
+            <th scope="col" style="max-width: 50px !important;">Sl No.</th>
             <th scope="col">Task</th>
             <th scope="col">Due Date</th>
             <th scope="col">Assigned To</th>
@@ -28,15 +29,16 @@
             <td>{{ task.due_date | date}}</td>
             <td>{{ employees[i] }}</td>
             <td class="">
-              <span class="badge rounded-pill text-center me-1" [class]="task.completed ? 'bg-success': 'bg-warning'">
-                <fa-icon [icon]='task.completed ? faCheck: faTriangleExclamation' class="fa-thin"></fa-icon> {{
-                task.completed ? 'Completed': 'Pending'}}
+              <span class="badge rounded-pill text-center me-1"
+                [class]="task.status == 1? 'bg-warning': task.status == 2? 'bg-primary': 'bg-success'">
+                <fa-icon [icon]="task.status == 1? faTriangleExclamation: task.status == 2? faXmark: faCheck"
+                  class="fa-thin"></fa-icon>
+                {{ task.status == 1? 'Pending': task.status == 2? 'Cancelled': 'Completed' }}
               </span>
               <span class="badge rounded-pill text-center"
-                [class]="task.completed ? ((task.completed < task.due_date)  ? 'bg-success': 'bg-danger'): (task.due_date < currentDate) ? 'bg-danger': ''">
-                <fa-icon [icon]='task.completed ? faCheck: faCircleExclamation' class="fa-thin"></fa-icon>
-                {{ task.completed ? ((task.completed < task.due_date) ? 'On-Time' : 'Overdue' ): (task.due_date <
-                  currentDate) ? 'Overdue' : '' }} </span>
+                [class]="(task.status == 2) ? '': (task.status == 1? ((currentDate > task.due_date)? 'bg-danger':''): ((task.completed < task.due_date)? 'bg-success':'bg-danger') )">
+                {{ (task.status == 2) ? '': (task.status == 1? ((currentDate > task.due_date)?
+                'Overdue':''):((task.completed < task.due_date)? 'On-time' :'Overdue')) }} </span>
             </td>
             <td>
               <div class="dropdown">
@@ -45,16 +47,29 @@
                   Action
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><a class="dropdown-item" role="button" data-bs-toggle="modal" data-bs-target="#addTask" (click)="onEditTask(task)">
-                      <fa-icon [icon]="faPencil"></fa-icon> Edit
+                  <li>
+                    <a class="dropdown-item" role="button" data-bs-toggle="modal" data-bs-target="#addTask"
+                      (click)="onEditTask(task)">
+                      <fa-icon [icon]="faPencil" class="text-secondary"></fa-icon> Edit task
                     </a>
                   </li>
-                  <li><a class="dropdown-item" role='button' (click)="deleteTask(task.id)">
-                      <fa-icon [icon]="faTrash"></fa-icon> Delete
-                    </a></li>
-                  <li><a class="dropdown-item" role='button'>
-                      <fa-icon [icon]="faBarsProgress"></fa-icon> View Progress
-                    </a></li>
+                  <li>
+                    <a class="dropdown-item" role="button" data-bs-toggle="modal" data-bs-target="#viewTask"
+                      (click)="viewTask(task)">
+                      <fa-icon [icon]="faEye" class="text-secondary"></fa-icon>
+                      View Task
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" role='button' (click)="deleteTask(task.id)">
+                      <fa-icon [icon]="faTrash" class="text-secondary"></fa-icon> Delete
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" role='button'>
+                      <fa-icon [icon]="faBarsProgress" class="text-secondary"></fa-icon> View Progress
+                    </a>
+                  </li>
                 </ul>
               </div>
             </td>
@@ -71,57 +86,129 @@
               <button type="button" class="btn-close py-1 m-0" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form [formGroup]="formValue">
+              <form [formGroup]="taskForm">
                 <div class="mb-2">
-                  <label for="taskName" class="form-label">Task Name</label>
+                  <label for="taskName" class="form-label">Task Name*</label>
                   <input type="text" formControlName="task" class="form-control form-control-sm" id="taskName"
                     aria-describedby="taskName" placeholder="Task Name" required="">
+                  <div *ngIf="taskName.touched && taskName.invalid" class="small text-danger text-start">
+                    <div *ngIf="taskName.errors['required']">*Task Name is required</div>
+                  </div>
                 </div>
                 <div class="mb-2">
-                  <label for="taskDescription" class="form-label">Task Description</label>
+                  <label for="taskDescription" class="form-label">Task Description*</label>
                   <textarea class="form-control form-control-sm" formControlName="description" id="taskDescription"
                     rows="1" placeholder="Task Description" required></textarea>
+                  <div *ngIf="description.touched && description.invalid" class="small text-danger text-start">
+                    <div *ngIf="description.errors['required']">*Task Description is required</div>
+                  </div>
                 </div>
-                <div class="input-group mb-3 input-group-sm">
-                  <label class="input-group-text" for="assignedToSelect">Assigned To</label>
-                  <select class="form-select" id="assignedToSelect" formControlName="employee_id" required="">
-                    <option selected>Choose...</option>
-                    <option [value]="employee.id" *ngFor="let employee of employeeDetails">{{ employee.first_name }} {{
-                      employee.last_name }}
-                    </option>
-                  </select>
+                <div class="mb-3">
+                  <div class="input-group input-group-sm">
+                    <label class="input-group-text" for="assignedToSelect">Assigned To*</label>
+                    <select class="form-select" id="assignedToSelect" formControlName="employee_id" required="">
+                      <option selected>Choose...</option>
+                      <option [value]="employee.id" *ngFor="let employee of employeeDetails">{{ employee.first_name }}
+                        {{ employee.last_name }}
+                      </option>
+                    </select>
+                  </div>
+                  <div *ngIf="employee_id.touched && employee_id.invalid" class="small text-danger text-start">
+                    <div *ngIf="employee_id.errors['required']">*Assigned To is required</div>
+                  </div>
                 </div>
                 <div class="mb-2">
-                  <label for="dueDate" class="form-label">Due Date</label>
+                  <label for="dueDate" class="form-label">Due Date*</label>
                   <input type="date" formControlName="due_date" class="form-control form-control-sm" id="dueDate"
-                    aria-describedby="dueDate" required>
+                    aria-describedby="dueDate" required [min]="currentDate">
+                  <div *ngIf="dueDate.touched && dueDate.invalid" class="small text-danger text-start">
+                    <div *ngIf="dueDate.errors['required']">*Due Date is required</div>
+                  </div>
                 </div>
+
                 <div class="mb-2">
                   <label for="completedDate" class="form-label">Completed Date</label>
                   <input type="date" formControlName="completed" class="form-control form-control-sm" id="completedDate"
-                    aria-describedby="completedDate">
+                    aria-describedby="completedDate" [max]="currentDate">
                 </div>
-                <div class="input-group mb-3  input-group-sm">
-                  <label class="input-group-text" for="statusSelect" required="">Status</label>
-                  <select class="form-select" id="statusSelect" formControlName="status">
-                    <option selected>Choose...</option>
-                    <option value="1">Pending</option>
-                    <option value="2">Cancelled</option>
-                    <option value="3">Completed</option>
-                  </select>
+                <div class="mb-3">
+                  <div class="input-group input-group-sm">
+                    <label class="input-group-text" for="statusSelect" required="">Status</label>
+                    <select class="form-select" id="statusSelect" formControlName="status">
+                      <option selected>Choose...</option>
+                      <option value="1">Pending</option>
+                      <option value="2">Cancelled</option>
+                      <option value="3">Completed</option>
+                    </select>
+                  </div>
+                  <div *ngIf="status.touched && status.invalid" class="small text-danger text-start">
+                    <div *ngIf="status.errors['required']">*Task Status is required</div>
+                  </div>
                 </div>
               </form>
             </div>
             <div class="modal-footer">
               <button type="button" id="addTaskCancel" class="btn btn-sm btn-secondary"
                 data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-sm btn-primary" (click)="postTask()">Add Task</button>
-              <button type="button" class="btn btn-sm btn-primary" (click)="updateTask()">Update Task</button>
+              <button type="button" class="btn btn-sm btn-primary" (click)="postTask()"
+                [class]='showAdd? "":"d-none"' [disabled]="!taskForm.valid">Add Task</button>
+              <button type="button" class="btn btn-sm btn-primary" (click)="updateTask()"
+                [class]='showAdd? "d-none": ""' [disabled]="!taskForm.valid">Update Task</button>
             </div>
           </div>
         </div>
       </div>
 
+      <div class="modal fade" [class]="taskView? '':'d-none'" id="viewTask" tabindex="-1" aria-labelledby="viewTask"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header py-1">
+              <h3 class="modal-title py-1 m-0" id="exampleModalLabel">
+                Add New Task</h3>
+              <button type="button" class="btn-close py-1 m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="p-1 rounded">
+                <div class="pt-1">
+                  <p class="mb-2 border-bottom">
+                    <strong class="d-block text-gray-dark">Task Name</strong>
+                    {{ taskView? taskView.task: '' }}
+                  </p>
+                </div>
+                <div class="mb-2 border-bottom">
+                  <p class="">
+                    <strong class="d-block text-gray-dark">Task Description</strong>
+                    {{ taskView? taskView.description: '' }}
+                  </p>
+                </div>
+                <div class="mb-2 border-bottom">
+                  <p class="">
+                    <strong class="d-block text-gray-dark">Assigned To</strong>
+                    {{ taskView? employees[taskView.employee_id]: '' }}
+                  </p>
+                </div>
+                <div class="mb-2 border-bottom">
+                  <p class="">
+                    <strong class="d-block text-gray-dark">Due Date</strong>
+                    {{ taskView? taskView.due_date: '' }}
+                  </p>
+                </div>
+                <div class="mb-2">
+                  <p class="">
+                    <strong class="d-block text-gray-dark">Status</strong>
+                    {{ taskView? (taskView.status == 1? 'Pending': taskView.status == 2? 'Cancelled': 'Completed'): ''}}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="addTaskCancel" class="btn btn-sm btn-secondary"
+                data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

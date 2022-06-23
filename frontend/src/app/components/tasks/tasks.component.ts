@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AppError } from '../common/app-error';
 import { BadRequestError } from '../common/bad-request-error';
 import { NotFoundError } from '../common/not-found-error';
 import { EmployeesService } from '../services/employees.service';
 import { TasksService } from '../services/tasks.service';
 import { TaskModel } from './task.module';
-import { faAdd, faBarsProgress, faCheck, faCircleExclamation, faCoffee, faCross, faPencil, faTrash, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faBarsProgress, faCheck, faCircleExclamation, faEye, faPencil, faTrash, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -16,13 +16,21 @@ import { faAdd, faBarsProgress, faCheck, faCircleExclamation, faCoffee, faCross,
 })
 
 export class TasksComponent implements OnInit {
-  tasklist;
-  employeeDetails;
+  tasklist: any;
+  employeeDetails: any;
   employees = [];
   bodyText: string;
-  formValue: FormGroup;
+  taskForm = new FormGroup({
+    task: new FormControl('', Validators.required),
+    description: new FormControl('', Validators.required),
+    employee_id: new FormControl(0, Validators.required),
+    due_date: new FormControl('', Validators.required),
+    completed: new FormControl(''),
+    status: new FormControl(0, Validators.required),
+  })
+  taskView: any;
+  showAdd: boolean = true;
   taskModelObject: TaskModel = new TaskModel();
-
   yourDate = new Date()
   currentDate = this.yourDate.toISOString().split('T')[0]
 
@@ -33,20 +41,30 @@ export class TasksComponent implements OnInit {
   faTriangleExclamation = faTriangleExclamation
   faCheck = faCheck
   faCircleExclamation = faCircleExclamation
-  constructor(private tasksService: TasksService, private employeesService: EmployeesService, private formbuilder: FormBuilder) { }
+  faEye = faEye
+  faXmark = faXmark
+
+  constructor(private tasksService: TasksService, private employeesService: EmployeesService) { }
   getAll: any;
+
+  get taskName() {
+    return this.taskForm.get('task')
+  }
+  get description() {
+    return this.taskForm.get('description')
+  }
+  get employee_id() {
+    return this.taskForm.get('employee_id')
+  }
+  get dueDate() {
+    return this.taskForm.get('due_date')
+  }
+  get status() {
+    return this.taskForm.get('status')
+  }
 
   ngOnInit(): void {
     console.log(this.currentDate);
-
-    this.formValue = this.formbuilder.group({
-      task: [''],
-      description: [''],
-      employee_id: [''],
-      due_date: [''],
-      completed: [''],
-      status: [''],
-    });
 
     this.tasksService.getAll()
       .subscribe({
@@ -82,14 +100,18 @@ export class TasksComponent implements OnInit {
   trackByFn(index, task) {
     return task ? task.id : undefined;
   }
-
+  addTask() {
+    this.taskForm.reset();
+  }
   postTask() {
-    this.taskModelObject.task = this.formValue.value.task;
-    this.taskModelObject.description = this.formValue.value.description;
-    this.taskModelObject.employee_id = this.formValue.value.employee_id;
-    this.taskModelObject.due_date = this.formValue.value.due_date;
-    this.taskModelObject.completed = this.formValue.value.completed;
-    this.taskModelObject.status = this.formValue.value.status;
+    this.taskModelObject.task = this.taskForm.value.task;
+    this.taskModelObject.description = this.taskForm.value.description;
+    this.taskModelObject.employee_id = this.taskForm.value.employee_id;
+    this.taskModelObject.due_date = this.taskForm.value.due_date;
+    this.taskModelObject.completed = this.taskForm.value.completed;
+    this.taskModelObject.status = this.taskForm.value.status;
+    console.log(this.taskModelObject);
+
     this.tasksService.create(this.taskModelObject)
       .subscribe({
         next: (res) => {
@@ -106,7 +128,7 @@ export class TasksComponent implements OnInit {
         },
         complete: () => {
           console.log('Complete')
-          this.formValue.reset();
+          this.taskForm.reset();
           let ref = document.getElementById('addTaskCancel');
           ref?.click()
           this.ngOnInit()
@@ -136,12 +158,12 @@ export class TasksComponent implements OnInit {
   }
 
   updateTask() {
-    this.taskModelObject.task = this.formValue.value.task;
-    this.taskModelObject.description = this.formValue.value.description;
-    this.taskModelObject.employee_id = this.formValue.value.employee_id;
-    this.taskModelObject.due_date = this.formValue.value.due_date;
-    this.taskModelObject.completed = this.formValue.value.completed;
-    this.taskModelObject.status = this.formValue.value.status;
+    this.taskModelObject.task = this.taskForm.value.task;
+    this.taskModelObject.description = this.taskForm.value.description;
+    this.taskModelObject.employee_id = this.taskForm.value.employee_id;
+    this.taskModelObject.due_date = this.taskForm.value.due_date;
+    this.taskModelObject.completed = this.taskForm.value.completed;
+    this.taskModelObject.status = this.taskForm.value.status;
 
     this.tasksService.update(this.taskModelObject.id, this.taskModelObject)
       .subscribe({
@@ -159,25 +181,32 @@ export class TasksComponent implements OnInit {
         },
         complete: () => {
           console.log('Complete')
-          this.formValue.reset();
+          this.taskForm.reset();
           let ref = document.getElementById('addTaskCancel');
           ref?.click()
           this.ngOnInit()
+          this.showAdd = true
         }
       })
   }
   onEditTask(task: any) {
+    this.showAdd = false
     this.taskModelObject.id = task.id
-    this.formValue.controls['task'].setValue(task.task)
-    this.formValue.controls['description'].setValue(task.description)
-    this.formValue.controls['employee_id'].setValue(task.employee_id)
-    this.formValue.controls['due_date'].setValue(task.due_date)
-    this.formValue.controls['completed'].setValue(task.completed)
-    this.formValue.controls['status'].setValue(task.status)
+    this.taskForm.controls['task'].setValue(task.task)
+    this.taskForm.controls['description'].setValue(task.description)
+    this.taskForm.controls['employee_id'].setValue(task.employee_id)
+    this.taskForm.controls['due_date'].setValue(task.due_date)
+    this.taskForm.controls['completed'].setValue(task.completed)
+    this.taskForm.controls['status'].setValue(task.status)
   }
 
-  onView(task: any) {
-    this
+  viewTask(task: any) {
+    console.log("viewTask");
+
+    this.taskView = task
+    console.log(this.taskView);
+
   }
+
 }
 

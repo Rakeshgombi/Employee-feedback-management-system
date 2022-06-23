@@ -1,124 +1,65 @@
 <div class="d-flex flex-md-column flex-shrink-0 p-3 bg-dark w-100 h-100">
-  <a routerLink="" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none mx-auto text-white fw-bold">
+  <a routerLink=""
+    class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none mx-auto text-white fw-bold">
     <img class="bi img-responsive me-1" width="40" height="40" src="../../../assets/images/koch_logo.png">
     <span class="fs-4">KOCH</span>
   </a>
   <hr>
   <ul class="nav d-flex d-md-block mb-auto overflow-auto">
     <li>
-      <a routerLink="" class="nav-link text-secondary" routerLinkActive="text-white" (isActiveChange)="setHeading('Dashboard')" ariaCurrentWhenActive="page">
+      <a routerLink="" class="nav-link text-secondary" routerLinkActive="text-white"
+        (isActiveChange)="setHeading('Dashboard')" ariaCurrentWhenActive="page">
         Dashboard
       </a>
     </li>
     <li>
-      <a routerLink="tasks" class="nav-link text-secondary" routerLinkActive="text-white" (isActiveChange)="setHeading('Tasks')" ariaCurrentWhenActive="page">
+      <a routerLink="tasks" class="nav-link text-secondary" routerLinkActive="text-white"
+        (isActiveChange)="setHeading('Tasks')" ariaCurrentWhenActive="page">
         Tasks
       </a>
     </li>
     <li>
-      <a routerLink="evaluation" class="nav-link text-secondary" routerLinkActive="text-white" (isActiveChange)="setHeading('Evaluation')"
-        ariaCurrentWhenActive="page">
+      <a routerLink="evaluation" class="nav-link text-secondary" routerLinkActive="text-white"
+        (isActiveChange)="setHeading('Evaluation')" ariaCurrentWhenActive="page">
         Evaluation
       </a>
     </li>
     <li>
-      <a routerLink="products" class="nav-link text-secondary" routerLinkActive="text-white" (isActiveChange)="setHeading('Products')"
-        ariaCurrentWhenActive="page">
-        Products
-      </a>
-    </li>
-    <li>
-      <a routerLink="departments" class="nav-link text-secondary" routerLinkActive="text-white" (isActiveChange)="setHeading('Departments')"
-        ariaCurrentWhenActive="page">
+      <a routerLink="departments" class="nav-link text-secondary" routerLinkActive="text-white"
+        (isActiveChange)="setHeading('Departments')" ariaCurrentWhenActive="page">
         Departments
       </a>
     </li>
     <li>
-      <a routerLink="designations" class="nav-link text-secondary" routerLinkActive="text-white" (isActiveChange)="setHeading('Designations')">
+      <a routerLink="designations" class="nav-link text-secondary" routerLinkActive="text-white"
+        (isActiveChange)="setHeading('Designations')">
         Designations
       </a>
     </li>
     <li>
-      <a class="nav-link text-secondary d-flex justify-content-between" data-bs-toggle="collapse"
-        href="#employeesColapse" role="button" aria-expanded="false" aria-controls="employeesColapse">
-        Employees <i class="bi bi-chevron-down"></i>
+      <a routerLink="employees" class="nav-link text-secondary" routerLinkActive="text-white"
+        (isActiveChange)="setHeading('Employees')">
+        Employees
       </a>
-      <div class="collapse" id="employeesColapse">
-        <ul class="nav nav-pills flex-column mb-auto-50 px-2">
-          <li class="">
-            <a routerLink="employees-add" class="nav-link text-secondary text-opacity-75 d-flex justify-content-between"
-              routerLinkActive="text-white" (isActiveChange)="setHeading('Add New Employee')">
-              Add New
-              <span class=""><i class="bi bi-chevron-right"></i></span>
-            </a>
-          </li>
-          <li>
-            <a routerLink="employees-list"
-              class="nav-link text-secondary text-opacity-75 d-flex justify-content-between"
-              routerLinkActive="text-white" (isActiveChange)="setHeading('Employee List')">
-              List
-              <span class=""><i class="bi bi-chevron-right"></i></span>
-            </a>
-          </li>
-        </ul>
-      </div>
     </li>
     <li>
-      <a class="nav-link text-secondary d-flex justify-content-between" data-bs-toggle="collapse"
-        href="#evaluatorColapse" role="button" aria-expanded="false" aria-controls="evaluatorColapse">
-        Evaluator <i class="bi bi-chevron-down"></i>
+      <a routerLink="evaluator" class="nav-link text-secondary" routerLinkActive="text-white"
+        (isActiveChange)="setHeading('Evaluators')">
+        Evaluator
       </a>
-      <div class="collapse" id="evaluatorColapse">
-        <ul class="nav nav-pills flex-column mb-auto-50 px-2">
-          <li class="">
-            <a routerLink="evaluator-add" class="nav-link text-secondary text-opacity-75 d-flex justify-content-between"
-              routerLinkActive="text-white" (isActiveChange)="setHeading('Add New Evaluator')">
-              Add New
-              <span class=""><i class="bi bi-chevron-right"></i></span>
-            </a>
-          </li>
-          <li>
-            <a routerLink="evaluator-list"
-              class="nav-link text-secondary text-opacity-75 d-flex justify-content-between"
-              routerLinkActive="text-white" (isActiveChange)="setHeading('Evaluator List')">
-              List
-              <span class=""><i class="bi bi-chevron-right"></i></span>
-            </a>
-          </li>
-        </ul>
-      </div>
     </li>
-
     <li>
-      <a class="nav-link text-secondary d-flex justify-content-between" data-bs-toggle="collapse" href="#usersColapse"
-        role="button" aria-expanded="false" aria-controls="usersColapse">
-        Users <span class=""><i class="bi bi-chevron-down"></i></span>
+      <a routerLink="users" class="nav-link text-secondary" routerLinkActive="text-white"
+        (isActiveChange)="setHeading('Users')">
+        Users
       </a>
-      <div class="collapse" id="usersColapse">
-        <ul class="nav nav-pills flex-column mb-auto-50 px-2">
-          <li class="">
-            <a routerLink="users-add" class="nav-link text-secondary text-opacity-75 d-flex justify-content-between"
-              routerLinkActive="text-white" (isActiveChange)="setHeading('Add New User')">
-              Add New
-              <span class=""><i class="bi bi-chevron-right"></i></span>
-            </a>
-          </li>
-          <li>
-            <a routerLink="users-list" class="nav-link text-secondary text-opacity-75 d-flex justify-content-between"
-              routerLinkActive="text-white" (isActiveChange)="setHeading('Users List')">
-              List
-              <span class=""><i class="bi bi-chevron-right"></i></span>
-            </a>
-          </li>
-        </ul>
-      </div>
     </li>
-
   </ul>
   <hr>
   <div class="dropdown">
-    <button class="d-flex align-items-center text-decoration-none dropdown-toggle cursor-pointer bg-dark border-none outline-none" id="dropdownUser1"
-      data-bs-toggle="dropdown" aria-expanded="false">
+    <button
+      class="d-flex align-items-center text-decoration-none dropdown-toggle cursor-pointer bg-dark border-none outline-none"
+      id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
       <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
       <strong>mdo</strong>
     </button>
@@ -129,7 +70,7 @@
       <li>
         <hr class="dropdown-divider">
       </li>
-      <li><a class="dropdown-item" routerLink="#">Sign out</a></li>
+      <li><a class="dropdown-item" routerLink="signin">Sign out</a></li>
     </ul>
   </div>
 </div>

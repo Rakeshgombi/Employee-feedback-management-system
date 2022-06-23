@@ -8,6 +8,6 @@ import { DataService } from './data.service';
 export class DepartmentsService extends DataService {
 
   constructor(_http: HttpClient) { 
-    super("http://127.0.0.1:8000/departments", _http)
+    super("http://127.0.0.1:8000/departments/", _http)
   }
 }

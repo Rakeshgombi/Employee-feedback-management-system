@@ -11,13 +11,10 @@ import { AppErrorHandler } from './components/common/app-error-handler';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DepartmentsComponent } from './components/departments/departments.component';
 import { DesignationsComponent } from './components/designations/designations.component';
-import { EmployeesAddComponent } from './components/employees/employees-add/employees-add.component';
-import { EmployeesListComponent } from './components/employees/employees-list/employees-list.component';
+import { EmployeesComponent} from './components/employees/employees-add/employees-add.component';
 import { EvaluationComponent } from './components/evaluation/evaluation.component';
-import { EvaluatorAddComponent } from './components/evaluator/evaluator-add/evaluator-add.component';
-import { EvaluatorListComponent } from './components/evaluator/evaluator-list/evaluator-list.component';
+import { EvaluatorComponent } from './components/evaluator/evaluator-add/evaluator-add.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { ProductsComponent } from './components/products/products.component';
 import { DepartmentsService } from './components/services/departments.service';
 import { DesignationsService } from './components/services/designations.service';
 import { EmployeesService } from './components/services/employees.service';
@@ -26,9 +23,9 @@ import { TasksService } from './components/services/tasks.service';
 import { UsersService } from './components/services/users.service';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { TasksComponent } from './components/tasks/tasks.component';
-import { UsersAddComponent } from './components/users/users-add/users-add.component';
-import { UsersListComponent } from './components/users/users-list/users-list.component';
+import { UsersComponent } from './components/users/users-add/users-add.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SigninComponent } from './components/signin/signin.component';
 
 @NgModule({
   declarations: [
@@ -37,16 +34,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     DashboardComponent,
     DesignationsComponent,
     TasksComponent,
-    ProductsComponent,
     DepartmentsComponent,
-    EmployeesAddComponent,
-    EmployeesListComponent,
-    UsersAddComponent,
-    UsersListComponent,
+    EmployeesComponent,
+    UsersComponent,
     EvaluationComponent,
-    EvaluatorListComponent,
-    EvaluatorAddComponent,
+    EvaluatorComponent,
     NotFoundComponent,
+    SigninComponent,
   ],
   imports: [
     AppRoutingModule,
