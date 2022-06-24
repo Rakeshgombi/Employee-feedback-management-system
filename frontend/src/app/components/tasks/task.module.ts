@@ -6,5 +6,4 @@ export class TaskModel {
   due_date: string = '';
   completed: string = '';
   status: number = 0;
-  date_created: string = '00/00/0000'
 }

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EvaluatorComponent } from './evaluator-add.component';
+import { EvaluatorComponent } from './evaluator.component';
 
 describe('EvaluatorComponent', () => {
   let component: EvaluatorComponent;
@@ -11,9 +11,7 @@ describe('EvaluatorComponent', () => {
       declarations: [ EvaluatorComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(EvaluatorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

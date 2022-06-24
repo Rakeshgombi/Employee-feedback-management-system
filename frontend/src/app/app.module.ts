@@ -13,7 +13,6 @@ import { DepartmentsComponent } from './components/departments/departments.compo
 import { DesignationsComponent } from './components/designations/designations.component';
 import { EmployeesComponent} from './components/employees/employees-add/employees-add.component';
 import { EvaluationComponent } from './components/evaluation/evaluation.component';
-import { EvaluatorComponent } from './components/evaluator/evaluator-add/evaluator-add.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { DepartmentsService } from './components/services/departments.service';
 import { DesignationsService } from './components/services/designations.service';
@@ -26,6 +25,7 @@ import { TasksComponent } from './components/tasks/tasks.component';
 import { UsersComponent } from './components/users/users-add/users-add.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SigninComponent } from './components/signin/signin.component';
+import { EvaluatorComponent } from './components/evaluator/evaluator.component';
 
 @NgModule({
   declarations: [
@@ -38,9 +38,9 @@ import { SigninComponent } from './components/signin/signin.component';
     EmployeesComponent,
     UsersComponent,
     EvaluationComponent,
-    EvaluatorComponent,
     NotFoundComponent,
     SigninComponent,
+    EvaluatorComponent,
   ],
   imports: [
     AppRoutingModule,

@@ -28,8 +28,9 @@ async def get_evaluator_details(id: int):
 
 @router.post("/evaluators", status_code=status.HTTP_201_CREATED, response_model=EvaluatorListSchema)
 async def create_evaluator(new_evaluator: EvaluatorListSchemaIn):
+    print(new_evaluator)
     query = EvaluatorList.insert().values(
-        employee_id=new_evaluator.employee_id,
+        employee_id=int(new_evaluator.employee_id),
         first_name=new_evaluator.first_name,
         middle_name=new_evaluator.middle_name,
         last_name=new_evaluator.last_name,

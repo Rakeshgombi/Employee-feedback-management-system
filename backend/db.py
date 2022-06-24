@@ -42,11 +42,11 @@ EvaluatorList = Table(
     Column("id", Integer, primary_key=True),
     Column("employee_id", Integer, nullable=False, unique=True),
     Column("first_name", String(50), nullable=False),
-    Column("middle_name", String(50), nullable=False),
+    Column("middle_name", String(50), nullable=True),
     Column("last_name", String(50), nullable=False),
     Column("email", String(200), nullable=False, unique=True),
     Column("password", String(500), nullable=False),
-    Column("avatar", String(500), nullable=False),
+    Column("avatar", String(500), nullable=True),
     Column("date_created", String(50), nullable=False)
 )
 

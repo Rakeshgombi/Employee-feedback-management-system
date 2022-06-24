@@ -27,6 +27,7 @@ async def get_task_detail(id: int):
 
 @router.post("/tasklist", status_code=status.HTTP_201_CREATED, response_model=TaskListSchema)
 async def create_tasklist(new_tasklist: TaskListSchemaIn):
+    print(new_tasklist)
     query = TaskList.insert().values(
         task=new_tasklist.task,
         description=new_tasklist.description,
