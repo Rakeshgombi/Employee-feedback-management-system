@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-users-add',
-  templateUrl: './users-add.component.html',
-  styleUrls: ['./users-add.component.css']
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
 

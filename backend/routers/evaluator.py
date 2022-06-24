@@ -34,7 +34,7 @@ async def create_evaluator(new_evaluator: EvaluatorListSchemaIn):
         first_name=new_evaluator.first_name,
         middle_name=new_evaluator.middle_name,
         last_name=new_evaluator.last_name,
-        email=new_evaluator.email,
+        email=new_evaluator.email.lower(),
         password=new_evaluator.password,
         avatar=new_evaluator.avatar,
         date_created=datetime.now()
@@ -56,7 +56,7 @@ async def update_evaluator(id: int, new_evaluator: EvaluatorListSchemaIn):
             first_name=new_evaluator.first_name,
             middle_name=new_evaluator.middle_name,
             last_name=new_evaluator.last_name,
-            email=new_evaluator.email,
+            email=new_evaluator.email.lower(),
             password=new_evaluator.password,
             avatar=new_evaluator.avatar,
         )

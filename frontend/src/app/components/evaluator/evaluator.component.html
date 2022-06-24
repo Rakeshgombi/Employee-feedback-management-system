@@ -77,33 +77,33 @@
             <div class="modal-body">
               <form [formGroup]="evaluatorForm">
                 <div class="mb-3">
-                  <label for="employeeId" class="form-label">Employee Id*</label>
-                  <input type="number" class="form-control" formControlName="employeeId" id="employeeId"
-                    placeholder="123456" aria-label="employeeId">
-                  <div *ngIf="employeeId.touched && employeeId.invalid" class="small text-danger text-start">
-                    <div *ngIf="employeeId.errors['required']">*Employee Id is required</div>
+                  <label for="employee_id" class="form-label">Employee Id*</label>
+                  <input type="number" class="form-control" formControlName="employee_id" id="employee_id"
+                    placeholder="123456" aria-label="employee_id">
+                  <div *ngIf="employee_id.touched && employee_id.invalid" class="small text-danger text-start">
+                    <div *ngIf="employee_id.errors['required']">*Employee Id is required</div>
                   </div>
                 </div>
                 <div class="row g-3 mb-3 input-group-sm">
                   <div class="col">
                     <label for="first-name" class="form-label">First Name*</label>
-                    <input type="text" class="form-control" formControlName="firstName" id="first-name"
+                    <input type="text" class="form-control" formControlName="first_name" id="first-name"
                       placeholder="John" aria-label="First name">
                     <div *ngIf="evaluatorFName.touched && evaluatorFName.invalid" class="small text-danger text-start">
                       <div *ngIf="evaluatorFName.errors['required']">*First Name is required</div>
                     </div>
                   </div>
                   <div class="col">
-                    <label for="middle-name" class="form-label">Middle Name*</label>
-                    <input type="text" class="form-control" formControlName="middleName" id="middle-name"
+                    <label for="middle-name" class="form-label">Middle Name</label>
+                    <input type="text" class="form-control" formControlName="middle_name" id="middle-name"
                       placeholder="M" aria-label="Middle name">
                   </div>
                   <div class="col">
                     <label for="last-name" class="form-label">Last Name*</label>
-                    <input type="text" class="form-control" formControlName="lastName" id="last-name" placeholder="Doe"
+                    <input type="text" class="form-control" formControlName="last_name" id="last-name" placeholder="Doe"
                       aria-label="Last name">
                     <div *ngIf="evaluatorLName.touched && evaluatorLName.invalid" class="small text-danger text-start">
-                      <div *ngIf="evaluatorLName.errors['required']">*Evaluator Name is required</div>
+                      <div *ngIf="evaluatorLName.errors['required']">*Last Name is required</div>
                     </div>
                   </div>
                 </div>
@@ -112,7 +112,7 @@
                   <input type="email" class="form-control" formControlName="email" id="email"
                     placeholder="you@example.com" aria-label="email" autocomplete>
                   <div *ngIf="email.touched && email.invalid" class="small text-danger text-start">
-                    <div *ngIf="email.errors['required']">*Evaluator Name is required</div>
+                    <div *ngIf="email.errors['required']">*Email is required</div>
                   </div>
                 </div>
                 <div class="mb-3">
@@ -120,7 +120,7 @@
                   <input type="password" class="form-control" formControlName="password" id="password"
                     placeholder="******" aria-label="password" autocomplete>
                   <div *ngIf="password.touched && password.invalid" class="small text-danger text-start">
-                    <div *ngIf="password.errors['required']">*Evaluator Name is required</div>
+                    <div *ngIf="password.errors['required']">*Password is required</div>
                   </div>
                 </div>
                 <div class="mb-3">
@@ -156,32 +156,19 @@
                 <div class="pt-1">
                   <p class="mb-2 border-bottom">
                     <strong class="d-block text-gray-dark">Evaluator Name</strong>
-                    {{ evaluatorView? evaluatorView.evaluator: '' }}
+                    {{ evaluatorView? (evaluatorView.first_name + " " + evaluatorView.last_name): '' }}
                   </p>
                 </div>
                 <div class="mb-2 border-bottom">
                   <p class="">
-                    <strong class="d-block text-gray-dark">Evaluator Description</strong>
-                    {{ evaluatorView? evaluatorView.description: '' }}
+                    <strong class="d-block text-gray-dark">Evaluator Email</strong>
+                    {{ evaluatorView? evaluatorView.email: '' }}
                   </p>
                 </div>
                 <div class="mb-2 border-bottom">
                   <p class="">
-                    <strong class="d-block text-gray-dark">Assigned To</strong>
-                    {{ evaluatorView? employees[evaluatorView.employee_id]: '' }}
-                  </p>
-                </div>
-                <div class="mb-2 border-bottom">
-                  <p class="">
-                    <strong class="d-block text-gray-dark">Due Date</strong>
-                    {{ evaluatorView? evaluatorView.due_date: '' }}
-                  </p>
-                </div>
-                <div class="mb-2">
-                  <p class="">
-                    <strong class="d-block text-gray-dark">Status</strong>
-                    {{ evaluatorView? (evaluatorView.status == 1? 'Pending': evaluatorView.status == 2? 'Cancelled':
-                    'Completed'): ''}}
+                    <strong class="d-block text-gray-dark">Employee Id</strong>
+                    {{ evaluatorView? evaluatorView.employee_id: '' }}
                   </p>
                 </div>
               </div>

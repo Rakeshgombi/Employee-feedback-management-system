@@ -202,11 +202,7 @@ export class TasksComponent implements OnInit {
 
   viewTask(task: any) {
     console.log("viewTask");
-
     this.taskView = task
     console.log(this.taskView);
-
   }
-
 }
-

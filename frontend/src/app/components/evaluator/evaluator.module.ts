@@ -1,9 +1,9 @@
 export class EvaluatorModel {
   id: number = 0;
-  employeeId: number = 0;
-  firstName: string = '';
-  middleName: string = '';
-  lastName: string = '';
+  employee_id: number = 0;
+  first_name: string = '';
+  middle_name: string = '';
+  last_name: string = '';
   email: string = '';
   password: string= '';
   avatar: string = ''

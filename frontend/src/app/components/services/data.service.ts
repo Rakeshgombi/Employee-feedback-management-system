@@ -26,6 +26,7 @@ export class DataService {
   }
 
   create(resource: any): Observable<any> {
+    console.log(resource);
     return this._http.post(this.url, resource).pipe(
       catchError(this.handleError)
     );
@@ -36,7 +37,7 @@ export class DataService {
       catchError(this.handleError)
     );
   }
-  
+
   deleteById(id: number): Observable<any> {
     return this._http.delete(this.url + id).pipe(
       catchError(this.handleError)

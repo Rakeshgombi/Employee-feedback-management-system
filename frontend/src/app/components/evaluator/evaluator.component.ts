@@ -21,10 +21,10 @@ export class EvaluatorComponent implements OnInit {
   employees = [];
   bodyText: string;
   evaluatorForm = new FormGroup({
-    employeeId: new FormControl(0, Validators.required),
-    firstName: new FormControl('', Validators.required),
-    middleName: new FormControl(''),
-    lastName: new FormControl('', Validators.required),
+    employee_id: new FormControl(0, Validators.required),
+    first_name: new FormControl('', Validators.required),
+    middle_name: new FormControl(''),
+    last_name: new FormControl('', Validators.required),
     email: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
     avatar: new FormControl('')
@@ -49,13 +49,13 @@ export class EvaluatorComponent implements OnInit {
   getAll: any;
 
   get evaluatorFName() {
-    return this.evaluatorForm.get('firstName')
+    return this.evaluatorForm.get('first_name')
   }
   get evaluatorLName() {
-    return this.evaluatorForm.get('lastName')
+    return this.evaluatorForm.get('last_name')
   }
-  get employeeId() {
-    return this.evaluatorForm.get('employeeId')
+  get employee_id() {
+    return this.evaluatorForm.get('employee_id')
   }
   get email() {
     return this.evaluatorForm.get('email')
@@ -81,29 +81,30 @@ export class EvaluatorComponent implements OnInit {
         },
         complete: () => console.log('Complete')
       })
-
   }
+
   trackByFn(index, evaluator) {
     return evaluator ? evaluator.id : undefined;
   }
+
   addEvaluator() {
     this.evaluatorForm.reset();
   }
+
   postEvaluator() {
-    this.evaluatorModelObject.employeeId = this.evaluatorForm.value.employeeId;
-    this.evaluatorModelObject.firstName = this.evaluatorForm.value.firstName;
-    this.evaluatorModelObject.lastName = this.evaluatorForm.value.lastName;
-    this.evaluatorModelObject.middleName = this.evaluatorForm.value.middleName;
-    this.evaluatorModelObject.lastName = this.evaluatorForm.value.lastName;
+    this.evaluatorModelObject.employee_id = this.evaluatorForm.value.employee_id;
+    this.evaluatorModelObject.first_name = this.evaluatorForm.value.first_name;
+    this.evaluatorModelObject.last_name = this.evaluatorForm.value.last_name;
+    this.evaluatorModelObject.middle_name = this.evaluatorForm.value.middle_name;
+    this.evaluatorModelObject.last_name = this.evaluatorForm.value.last_name;
     this.evaluatorModelObject.email = this.evaluatorForm.value.email;
     this.evaluatorModelObject.password = this.evaluatorForm.value.password;
-    this.evaluatorModelObject.avatar = (this.evaluatorForm.value.avatar? this.evaluatorForm.value.avatar : 'A');
+    this.evaluatorModelObject.avatar = (this.evaluatorForm.value.avatar ? this.evaluatorForm.value.avatar : '');
     console.log(this.evaluatorModelObject);
 
     this.evaluatorsService.create(this.evaluatorModelObject)
       .subscribe({
         next: (res) => {
-          console.log(res);
           alert("Evaluator created successfully");
         },
         error: (e: AppError) => {
@@ -146,19 +147,18 @@ export class EvaluatorComponent implements OnInit {
   }
 
   updateEvaluator() {
-    this.evaluatorModelObject.employeeId = this.evaluatorForm.value.employeeId;
-    this.evaluatorModelObject.firstName = this.evaluatorForm.value.firstName;
-    this.evaluatorModelObject.lastName = this.evaluatorForm.value.lastName;
-    this.evaluatorModelObject.middleName = this.evaluatorForm.value.middleName;
-    this.evaluatorModelObject.lastName = this.evaluatorForm.value.lastName;
+    this.evaluatorModelObject.employee_id = this.evaluatorForm.value.employee_id;
+    this.evaluatorModelObject.first_name = this.evaluatorForm.value.first_name;
+    this.evaluatorModelObject.last_name = this.evaluatorForm.value.last_name;
+    this.evaluatorModelObject.middle_name = this.evaluatorForm.value.middle_name;
+    this.evaluatorModelObject.last_name = this.evaluatorForm.value.last_name;
     this.evaluatorModelObject.email = this.evaluatorForm.value.email;
     this.evaluatorModelObject.password = this.evaluatorForm.value.password;
-    this.evaluatorModelObject.avatar = this.evaluatorForm.value.avatar;
+    this.evaluatorModelObject.avatar = (this.evaluatorForm.value.avatar ? this.evaluatorForm.value.avatar : '');
 
     this.evaluatorsService.update(this.evaluatorModelObject.id, this.evaluatorModelObject)
       .subscribe({
         next: (res) => {
-          console.log(res);
           alert("Evaluator Updated successfully");
         },
         error: (e: AppError) => {
@@ -179,25 +179,22 @@ export class EvaluatorComponent implements OnInit {
         }
       })
   }
+  
   onEditEvaluator(evaluator: any) {
     this.showAdd = false
     this.evaluatorModelObject.id = evaluator.id
-    this.evaluatorForm.controls['employeeId'].setValue(evaluator.employee_id)
-    this.evaluatorForm.controls['firstName'].setValue(evaluator.first_name)
-    this.evaluatorForm.controls['middleName'].setValue(evaluator.middle_name)
-    this.evaluatorForm.controls['lastName'].setValue(evaluator.last_name)
+    this.evaluatorForm.controls['employee_id'].setValue(evaluator.employee_id)
+    this.evaluatorForm.controls['first_name'].setValue(evaluator.first_name)
+    this.evaluatorForm.controls['middle_name'].setValue(evaluator.middle_name)
+    this.evaluatorForm.controls['last_name'].setValue(evaluator.last_name)
     this.evaluatorForm.controls['email'].setValue(evaluator.email)
     this.evaluatorForm.controls['password'].setValue(evaluator.password)
-    this.evaluatorForm.controls['avatar'].setValue(evaluator.avatar)
+    this.evaluatorModelObject.avatar = (this.evaluatorForm.value.avatar ? this.evaluatorForm.value.avatar : '');
   }
 
   viewEvaluator(evaluator: any) {
     console.log("viewEvaluator");
-
     this.evaluatorView = evaluator
-    console.log(this.evaluatorView);
-
   }
-
 }
 
