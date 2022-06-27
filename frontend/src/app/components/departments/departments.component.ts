@@ -55,7 +55,8 @@ export class DepartmentsComponent implements OnInit {
   }
 
   addDepartment() {
-
+    this.FormDepartment.reset();
+    this.showAdd = true
   }
   postDepartment() {
     this.departmentModelObject.department = this.FormDepartment.value.department

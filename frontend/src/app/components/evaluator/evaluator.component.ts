@@ -88,7 +88,8 @@ export class EvaluatorComponent implements OnInit {
   }
 
   addEvaluator() {
-    this.evaluatorForm.reset();
+    this.evaluatorForm.reset();    
+    this.showAdd = true
   }
 
   postEvaluator() {

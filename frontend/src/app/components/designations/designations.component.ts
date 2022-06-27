@@ -55,7 +55,8 @@ export class DesignationsComponent implements OnInit {
   }
 
   addDesignation() {
-
+    this.FormDesignation.reset();
+    this.showAdd = true
   }
   postDesignation() {
     this.designationModelObject.designation = this.FormDesignation.value.designation
