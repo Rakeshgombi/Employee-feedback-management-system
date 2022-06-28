@@ -9,7 +9,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { EvaluatorComponent } from './components/evaluator/evaluator.component';
 import { EmployeesComponent } from './components/employees/employees.component';
-import { UsersComponent } from './components/users/users.component';
+import { UserComponent } from './components/users/user.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'designations', component: DesignationsComponent },
   { path: 'employees', component: EmployeesComponent },
   { path: 'evaluator', component: EvaluatorComponent },
-  { path: 'users', component: UsersComponent },
+  { path: 'users', component: UserComponent },
   { path: '**', component: NotFoundComponent },
 ];
 

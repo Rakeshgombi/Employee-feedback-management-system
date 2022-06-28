@@ -18,14 +18,14 @@ import { DesignationsService } from './components/services/designations.service'
 import { EmployeesService } from './components/services/employees.service';
 import { EvaluatorsService } from './components/services/evaluators.service';
 import { TasksService } from './components/services/tasks.service';
-import { UsersService } from './components/services/users.service';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SigninComponent } from './components/signin/signin.component';
 import { EvaluatorComponent } from './components/evaluator/evaluator.component';
 import { EmployeesComponent } from './components/employees/employees.component';
-import { UsersComponent } from './components/users/users.component';
+import { UserComponent } from './components/users/user.component';
+import { UserService } from './components/services/user.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,7 @@ import { UsersComponent } from './components/users/users.component';
     TasksComponent,
     DepartmentsComponent,
     EmployeesComponent,
-    UsersComponent,
+    UserComponent,
     EvaluationComponent,
     NotFoundComponent,
     SigninComponent,
@@ -56,7 +56,7 @@ import { UsersComponent } from './components/users/users.component';
   providers: [
     DepartmentsService,
     DesignationsService,
-    UsersService,
+    UserService,
     TasksService,
     EmployeesService,
     EvaluatorsService,

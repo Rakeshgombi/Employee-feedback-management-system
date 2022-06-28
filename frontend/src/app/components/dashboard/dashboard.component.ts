@@ -4,7 +4,7 @@ import { AppError } from '../common/app-error';
 import { NotFoundError } from '../common/not-found-error';
 import { DepartmentsService } from '../services/departments.service';
 import { DesignationsService } from '../services/designations.service';
-import { UsersService } from '../services/users.service';
+import { UserService } from '../services/user.service';
 import { EmployeesService } from '../services/employees.service';
 import { EvaluatorsService } from '../services/evaluators.service';
 import { TasksService } from '../services/tasks.service';
@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
   employees;
   evaluators;
   tasklist;
-  constructor(private departmentsService: DepartmentsService, private designationsService: DesignationsService, private usersService: UsersService, private employeesService: EmployeesService, private evaluatorsService: EvaluatorsService, private tasksService: TasksService) { }
+  constructor(private departmentsService: DepartmentsService, private designationsService: DesignationsService, private usersService: UserService, private employeesService: EmployeesService, private evaluatorsService: EvaluatorsService, private tasksService: TasksService) { }
 
   ngOnInit(): void {
     this.departmentsService.getAll()

@@ -1,0 +1,172 @@
+<div class="rounded  w-100 mh-100 mt-3 overflow-auto">
+  <div class="w-100 p-2 border-bottom">
+    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#addUser"
+      (click)="addUser()">
+      <fa-icon [icon]="faAdd"></fa-icon> Add New User
+    </button>
+  </div>
+  <div class="table w-100 mh-100  overflow-auto">
+    <div class="d-block  mh-100 w-100">
+      <table class="table table-striped text-sm mh-100 bg- w-100 table-responsive">
+        <thead>
+          <tr>
+            <th scope="col" style="max-width: 50px !important;">Sl No.</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody class="overflow-hidden mhh-100 mw-100">
+          <tr *ngFor="let user of userlist;  index as i; trackBy: trackByFn" class="w-100">
+            <th scope="row">{{ i + 1 }}</th>
+            <td style="max-width: 400px !important;">
+              <p class="fw-bold p-0 m-0">{{user.first_name + " " + user.last_name}}</p>
+              <p class="fst-italic p-0 m-0 fs-6 text-sm"><small class="d-inline-block text-truncate userDesc"
+                  style="max-width: 400px;" title='{{ user.description}}'>{{ user.description}}</small></p>
+            </td>
+            <td style="max-width: 400px !important;">
+              <p class="fw-bold p-0 m-0">{{user.email}}</p>
+              <p class="fst-italic p-0 m-0 fs-6 text-sm"><small class="d-inline-block text-truncate userDesc"
+                  style="max-width: 400px;" title='{{ user.description}}'>{{ user.description}}</small></p>
+            </td>
+            <td>
+              <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle btn-sm " type="button" id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  Action
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li>
+                    <a class="dropdown-item" role="button" data-bs-toggle="modal" data-bs-target="#addUser"
+                      (click)="onEditUser(user)">
+                      <fa-icon [icon]="faPencil" class="text-secondary"></fa-icon> Edit user
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" role="button" data-bs-toggle="modal" data-bs-target="#viewUser"
+                      (click)="viewUser(user)">
+                      <fa-icon [icon]="faEye" class="text-secondary"></fa-icon>
+                      View User
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" role='button' (click)="deleteUser(user.id)">
+                      <fa-icon [icon]="faTrash" class="text-secondary"></fa-icon> Delete
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" role='button'>
+                      <fa-icon [icon]="faBarsProgress" class="text-secondary"></fa-icon> View Progress
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Button trigger modal -->
+      <div class="modal fade" id="addUser" tabindex="-1" aria-labelledby="addUser" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header py-1">
+              <h3 class="modal-title py-1 m-0" id="exampleModalLabel">
+                Add New User</h3>
+              <button type="button" class="btn-close py-1 m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="userForm">
+                <div class="row g-3 mb-3 input-group-sm">
+                  <div class="col">
+                    <label for="first-name" class="form-label">First Name*</label>
+                    <input type="text" class="form-control" formControlName="first_name" id="first-name"
+                      placeholder="John" aria-label="First name">
+                    <div *ngIf="userFName.touched && userFName.invalid" class="small text-danger text-start">
+                      <div *ngIf="userFName.errors['required']">*First Name is required</div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label for="last-name" class="form-label">Last Name*</label>
+                    <input type="text" class="form-control" formControlName="last_name" id="last-name" placeholder="Doe"
+                      aria-label="Last name">
+                    <div *ngIf="userLName.touched && userLName.invalid" class="small text-danger text-start">
+                      <div *ngIf="userLName.errors['required']">*Last Name is required</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email*</label>
+                  <input type="email" class="form-control" formControlName="email" id="email"
+                    placeholder="you@example.com" aria-label="email" autocomplete>
+                  <div *ngIf="email.touched && email.invalid" class="small text-danger text-start">
+                    <div *ngIf="email.errors['required']">*Email is required</div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password*</label>
+                  <input type="password" class="form-control" formControlName="password" id="password"
+                    placeholder="******" aria-label="password" autocomplete>
+                  <div *ngIf="password.touched && password.invalid" class="small text-danger text-start">
+                    <div *ngIf="password.errors['required']">*Password is required</div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="taskName" class="form-label">Avatar</label>
+                  <input type="file" class="form-control" formControlName="avatar" id="avatar"
+                    placeholder="Choosw file">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="addUserCancel" class="btn btn-sm btn-secondary"
+                data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-sm btn-primary" (click)="postUser()" [class]='showAdd? "":"d-none"'
+                [disabled]="!userForm.valid">Add User</button>
+              <button type="button" class="btn btn-sm btn-primary" (click)="updateUser()"
+                [class]='showAdd? "d-none": ""' [disabled]="!userForm.valid">Update User</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" [class]="userView? '':'d-none'" id="viewUser" tabindex="-1" aria-labelledby="viewUser"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header py-1">
+              <h3 class="modal-title py-1 m-0" id="exampleModalLabel">
+                Add New User</h3>
+              <button type="button" class="btn-close py-1 m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="p-1 rounded">
+                <div class="pt-1">
+                  <p class="mb-2 border-bottom">
+                    <strong class="d-block text-gray-dark">User Name</strong>
+                    {{ userView? (userView.first_name + " " + userView.last_name): '' }}
+                  </p>
+                </div>
+                <div class="mb-2 border-bottom">
+                  <p class="">
+                    <strong class="d-block text-gray-dark">User Email</strong>
+                    {{ userView? userView.email: '' }}
+                  </p>
+                </div>
+                <div class="mb-2 border-bottom">
+                  <p class="">
+                    <strong class="d-block text-gray-dark">Employee Id</strong>
+                    {{ userView? userView.employee_id: '' }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="addUserCancel" class="btn btn-sm btn-secondary"
+                data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
