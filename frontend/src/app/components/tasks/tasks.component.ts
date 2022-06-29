@@ -163,7 +163,7 @@ export class TasksComponent implements OnInit {
     this.taskModelObject.description = this.taskForm.value.description;
     this.taskModelObject.employee_id = this.taskForm.value.employee_id;
     this.taskModelObject.due_date = this.taskForm.value.due_date;
-    this.taskModelObject.completed = this.taskForm.value.completed;
+    this.taskModelObject.completed = this.taskForm.value.completed ? this.taskForm.value.completed: '00-00-0000';
     this.taskModelObject.status = this.taskForm.value.status;
 
     this.tasksService.update(this.taskModelObject.id, this.taskModelObject)

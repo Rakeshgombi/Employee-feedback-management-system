@@ -15,11 +15,10 @@ async def get_evaluators():
     return await database.fetch_all(query)
 
 
-@router.get("/evaluator/{id}", response_model=EvaluatorListSchema)
+@router.get("/evaluators/{id}", response_model=EvaluatorListSchema)
 async def get_evaluator_details(id: int):
-    query = EvaluatorList.select().where(id == EvaluatorList.c.id)
-    evaluator = await database.execute(query)
-    print(evaluator)
+    query = EvaluatorList.select().where(EvaluatorList.c.id == id)
+    evaluator = await database.fetch_one(query)
     if evaluator is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Evaluator not found")

@@ -42,7 +42,7 @@ async def create_tasklist(new_tasklist: TaskListSchemaIn):
 
 
 @router.put("/tasklist/{id}", status_code=status.HTTP_201_CREATED, response_model=TaskListSchema)
-async def update_tasklist(id: int, new_tasklist: TaskListSchema):
+async def update_tasklist(id: int, new_tasklist: TaskListSchemaIn):
     query = TaskList.select().where(TaskList.c.id == id)
     task = await database.fetch_one(query)
     if task is None:
