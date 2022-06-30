@@ -108,8 +108,12 @@ export class EmployeesComponent implements OnInit {
         next: async (res) => {
           this.departmentDetails = await res;
           this.employeelist.forEach(element => {
-            let department_id = element["department_id"] - 1;
-            this.departments.push(this.departmentDetails[department_id]["department"]);
+            let department_id = element["department_id"];
+            this.departmentDetails.forEach(department => {
+              if (department["id"] === department_id) {
+                this.departments.push(department);
+              }
+            });
           });
         },
         error: (e: AppError) => {
@@ -125,8 +129,12 @@ export class EmployeesComponent implements OnInit {
         next: async (res) => {
           this.designationsDetails = await res;
           this.employeelist.forEach(element => {
-            let designation_id = element["designation_id"] - 1;
-            this.designations.push(this.designationsDetails[designation_id]["designation"]);
+            let designation_id = element["designation_id"];
+            this.designationsDetails.forEach(designation => {
+              if (designation["id"] === designation_id) {
+                this.designations.push(designation);
+              }
+            });
           });
         },
         error: (e: AppError) => {
@@ -141,10 +149,13 @@ export class EmployeesComponent implements OnInit {
         next: async (res) => {
           this.evaluatorsDetails = await res;
           console.log(this.evaluatorsDetails);
-
           this.employeelist.forEach(element => {
-            let evaluators_id = element["evaluator_id"] - 1;
-            this.evaluators.push(this.evaluatorsDetails[evaluators_id]["first_name"] + " " + this.evaluatorsDetails[evaluators_id]["last_name"]);
+            let evaluator_id = element["evaluator_id"];
+            this.evaluatorsDetails.forEach(evaluator => {
+              if (evaluator["id"] === evaluator_id) {
+                this.evaluators.push(evaluator);
+              }
+            });
           });
         },
         error: (e: AppError) => {
@@ -275,8 +286,8 @@ export class EmployeesComponent implements OnInit {
     this.employeeModelObject.avatar = (this.employeeForm.value.avatar ? this.employeeForm.value.avatar : '');
   }
 
-  onCloseEditEmployee(){
-    
+  onCloseEditEmployee() {
+
     this.showAdd = true
   }
 

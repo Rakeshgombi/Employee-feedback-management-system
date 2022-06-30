@@ -29,13 +29,14 @@
               <p class="p-0 m-0">{{employee.email}}</p>
             </td>
             <td style="max-width: 400px !important;">
-              <p class="p-0 m-0">{{departments[i]}}</p>
+              <p class="p-0 m-0">{{departments[i] ? departments[i].department : ""}}</p>
             </td>
             <td style="max-width: 400px !important;">
-              <p class="p-0 m-0">{{designations[i]}}</p>
+              <p class="p-0 m-0">{{designations[i] ? designations[i].designation : ""}}</p>
             </td>
             <td style="max-width: 400px !important;">
-              <p class="p-0 m-0">{{evaluators[i]}}</p>
+              <p class="p-0 m-0">{{ evaluators[i]? (evaluators[i].first_name + " " + evaluators[i].last_name) : "" }}
+              </p>
             </td>
             <td>
               <div class="dropdown">
@@ -133,8 +134,8 @@
                 </div>
                 <div class="mb-3">
                   <div class="input-group input-group-sm">
-                    <label class="input-group-text" for="assignedToSelect">Department*</label>
-                    <select class="form-select" id="assignedToSelect" formControlName="department_id" required="">
+                    <label class="input-group-text" for="departmentSelect">Department*</label>
+                    <select class="form-select" id="departmentSelect" formControlName="department_id" required="">
                       <option selected>Choose...</option>
                       <option [value]="department.id" *ngFor="let department of departmentDetails">{{
                         department.department }}
@@ -147,8 +148,8 @@
                 </div>
                 <div class="mb-3">
                   <div class="input-group input-group-sm">
-                    <label class="input-group-text" for="assignedToSelect">Designation*</label>
-                    <select class="form-select" id="assignedToSelect" formControlName="designation_id" required="">
+                    <label class="input-group-text" for="designationSelect">Designation*</label>
+                    <select class="form-select" id="designationSelect" formControlName="designation_id" required="">
                       <option selected>Choose...</option>
                       <option [value]="designation.id" *ngFor="let designation of designationsDetails">{{
                         designation.designation }}
@@ -161,8 +162,8 @@
                 </div>
                 <div class="mb-3">
                   <div class="input-group input-group-sm">
-                    <label class="input-group-text" for="assignedToSelect">Evaluator*</label>
-                    <select class="form-select" id="assignedToSelect" formControlName="evaluator_id" required="">
+                    <label class="input-group-text" for="evaluatorSelect">Evaluator*</label>
+                    <select class="form-select" id="evaluatorSelect" formControlName="evaluator_id" required="">
                       <option selected>Choose...</option>
                       <option [value]="evaluator.id" *ngFor="let evaluator of evaluatorsDetails">{{ evaluator.first_name
                         }} {{ evaluator.last_name }}

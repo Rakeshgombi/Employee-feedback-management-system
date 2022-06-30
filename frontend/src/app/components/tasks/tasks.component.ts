@@ -84,8 +84,12 @@ export class TasksComponent implements OnInit {
         next: async (res) => {
           this.employeeDetails = await res;
           this.tasklist.forEach(element => {
-            let employee_id = element["employee_id"] - 1;
-            this.employees.push(this.employeeDetails[employee_id]["first_name"] + " " + this.employeeDetails[employee_id]["last_name"]);
+            let employee_id = element["employee_id"];
+            this.employeeDetails.forEach(employee => {
+              if (employee["id"] === employee_id) {
+                this.employees.push(employee);
+              }
+            });
           });
         },
         error: (e: AppError) => {
@@ -109,7 +113,7 @@ export class TasksComponent implements OnInit {
     this.taskModelObject.description = this.taskForm.value.description;
     this.taskModelObject.employee_id = this.taskForm.value.employee_id;
     this.taskModelObject.due_date = this.taskForm.value.due_date;
-    this.taskModelObject.completed = this.taskForm.value.completed ? this.taskForm.value.completed: '00-00-0000';
+    this.taskModelObject.completed = this.taskForm.value.completed ? this.taskForm.value.completed : '00-00-0000';
     this.taskModelObject.status = this.taskForm.value.status;
     console.log(this.taskModelObject);
 
@@ -163,7 +167,7 @@ export class TasksComponent implements OnInit {
     this.taskModelObject.description = this.taskForm.value.description;
     this.taskModelObject.employee_id = this.taskForm.value.employee_id;
     this.taskModelObject.due_date = this.taskForm.value.due_date;
-    this.taskModelObject.completed = this.taskForm.value.completed ? this.taskForm.value.completed: '00-00-0000';
+    this.taskModelObject.completed = this.taskForm.value.completed ? this.taskForm.value.completed : '00-00-0000';
     this.taskModelObject.status = this.taskForm.value.status;
 
     this.tasksService.update(this.taskModelObject.id, this.taskModelObject)

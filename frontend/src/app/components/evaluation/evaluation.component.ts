@@ -128,7 +128,6 @@ export class EvaluationComponent implements OnInit {
           this.evaluatorsDetails = await res;
           this.evaluationlist.forEach(element => {
             let evaluator_id = element["evaluator_id"];
-
             this.evaluatorsDetails.forEach(evaluator => {
               if (evaluator["id"] === evaluator_id) {
                 this.evaluators.push(evaluator);

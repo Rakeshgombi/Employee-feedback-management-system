@@ -27,7 +27,7 @@
                   style="max-width: 400px;" title='{{ task.description}}'>{{ task.description}}</small></p>
             </td>
             <td>{{ task.due_date | date}}</td>
-            <td>{{ employees[i] }}</td>
+            <td>{{ employees[i]? employees[i].first_name + " " + employees[i].last_name : ""}}</td>
             <td class="">
               <span class="badge rounded-pill text-center me-1"
                 [class]="task.status == 1? 'bg-warning': task.status == 2? 'bg-primary': 'bg-success'">
