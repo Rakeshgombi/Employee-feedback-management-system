@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import List
 
 from fastapi import APIRouter, HTTPException, status
+from db import EmployeeList, TaskList
 from db import Ratings, database
 from inputSchemas import RatingsSchemaIn
 from resSchemas import RatingsSchema
@@ -9,7 +10,7 @@ from resSchemas import RatingsSchema
 router = APIRouter(tags=["ratings"])
 
 
-@router.get("/ratings", response_model=List[RatingsSchema])
+@router.get("/ratings/", response_model=List[RatingsSchema])
 async def get_ratings():
     query = Ratings.select()
     return await database.fetch_all(query)
@@ -17,16 +18,20 @@ async def get_ratings():
 
 @router.get("/ratings/{id}", response_model=RatingsSchema)
 async def get_ratings(id: int):
-    query = Ratings.select()
+    query = Ratings.select().where(id == id)
     return await database.fetch_one(query)
 
 
-@router.post("/ratings", status_code=status.HTTP_201_CREATED, response_model=RatingsSchema)
+@router.post("/ratings/", status_code=status.HTTP_201_CREATED, response_model=RatingsSchema)
 async def create_ratings(new_ratings: RatingsSchemaIn):
+    task = await database.fetch_one(TaskList.select().where(TaskList.c.id == new_ratings.task_id))
+    employee_id = task.employee_id
+    employeee = await database.fetch_one(EmployeeList.select().where(EmployeeList.c.id == employee_id))
+    evaluator_id = employeee.evaluator_id
     query = Ratings.insert().values(
-        employee_id=new_ratings.employee_id,
+        employee_id=employee_id,
         task_id=new_ratings.task_id,
-        evaluator_id=new_ratings.evaluator_id,
+        evaluator_id=evaluator_id,
         efficiency=new_ratings.efficiency,
         timeliness=new_ratings.timeliness,
         quality=new_ratings.quality,

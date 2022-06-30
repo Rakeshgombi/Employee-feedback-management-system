@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AppError } from '../common/app-error';
 import { BadRequestError } from '../common/bad-request-error';
@@ -22,20 +22,20 @@ export class EvaluationComponent implements OnInit {
   tasklist: any
   employeeDetails: any;
   taskDetails: any;
+  otherTasks: any;
+  otheremployees: any;
   evaluatorsDetails: any;
   employees = [];
   tasks = [];
   evaluators = [];
   bodyText: string;
   evaluationForm = new FormGroup({
-    employee_id: new FormControl(0, Validators.required),
     task_id: new FormControl(0, Validators.required),
-    evaluator_id: new FormControl(0, Validators.required),
     efficiency: new FormControl(0, Validators.required),
     timeliness: new FormControl(0, Validators.required),
     quality: new FormControl(0, Validators.required),
     accuracy: new FormControl(0, Validators.required),
-    remarks: new FormControl("", Validators.required),
+    remarks: new FormControl(""),
   })
   evaluationView: any;
   showAdd: boolean = true;
@@ -52,21 +52,32 @@ export class EvaluationComponent implements OnInit {
   faCircleExclamation = faCircleExclamation
   faEye = faEye
   faXmark = faXmark
-
-  constructor(private evaluationService: EvaluationService, private employeesService: EmployeesService, private taskService: TasksService, private evaluatorsService: EvaluatorsService) { }
+  constructor(private evaluationService: EvaluationService, private employeesService: EmployeesService, private taskService: TasksService, private evaluatorsService: EvaluatorsService, private ngZone: NgZone) { }
   getAll: any;
 
-  // get evaluationName() {
-  //   return this.evaluationForm.get('evaluation')
-  // }
+  get task_id() {
+    return this.evaluationForm.get('task_id')
+  }
+  get efficiency() {
+    return this.evaluationForm.get('efficiency')
+  }
+  get timeliness() {
+    return this.evaluationForm.get('timeliness')
+  }
+  get quality() {
+    return this.evaluationForm.get('quality')
+  }
+  get accuracy() {
+    return this.evaluationForm.get('accuracy')
+  }
 
 
   ngOnInit(): void {
-    console.log(this.currentDate);
+    // console.log(this.currentDate);
     this.evaluationService.getAll()
       .subscribe({
-        next: async (res) => {
-          this.evaluationlist = await res;
+        next: (res) => {
+          this.evaluationlist = res;
         },
         error: (e: AppError) => {
           if (e instanceof NotFoundError) {
@@ -75,36 +86,20 @@ export class EvaluationComponent implements OnInit {
         },
         complete: () => {
           console.log('Complete');
-          console.log("employeesService => ", this.employees);
-          console.log("evaluatorsService => ", this.evaluators);
-          console.log("taskService => ", this.tasks);
         }
       })
-    this.employeesService.getAll()
+
+    this.taskService.getAll()
       .subscribe({
-        next: async (res) => {
-          this.employeeDetails = await res;
-          this.evaluationlist.forEach(element => {
-            let employee_id = element["employee_id"];
-            this.employeeDetails.forEach(employee => {
-              if (employee["id"] === employee_id) {
-                this.employees.push(employee);
-              }
-            });
-          });          
+        next: (res) => {
+          this.taskDetails = res;
         },
         error: (e: AppError) => {
           if (e instanceof NotFoundError) {
             alert("Not found");
           } else throw e;
         },
-        complete: () => console.log('Complete')
-
-      })
-    this.taskService.getAll()
-      .subscribe({
-        next: async (res) => {
-          this.taskDetails = await res;
+        complete: () => {
           this.evaluationlist.forEach(element => {
             let task_id = element["task_id"];
             this.taskDetails.forEach(task => {
@@ -113,37 +108,58 @@ export class EvaluationComponent implements OnInit {
               }
             });
           });
+          this.otherTasks = this.taskDetails.filter((el) => !this.tasks.includes(el));
+          // console.log(this.otherTasks);
+          console.log('Complete')
+        }
+      })
+
+    this.employeesService.getAll()
+      .subscribe({
+        next: (res) => {
+          this.employeeDetails = res;
         },
         error: (e: AppError) => {
           if (e instanceof NotFoundError) {
             alert("Not found");
           } else throw e;
         },
-        complete: () => console.log('Complete')
-
+        complete: () => {
+          console.log('Complete')
+          this.tasks.forEach(async task => {
+            let employee_id = task["employee_id"];
+            this.employeeDetails.forEach(employee => {
+              if (employee["id"] === employee_id) {
+                this.employees.push(employee);
+              }
+            });
+            this.otheremployees = this.employeeDetails.filter((el) => !this.employees.includes(el));
+            // console.log(this.otheremployees);
+          })
+        }
       })
+
     this.evaluatorsService.getAll()
       .subscribe({
-        next: async (res) => {
-          this.evaluatorsDetails = await res;
-          this.evaluationlist.forEach(element => {
-            let evaluator_id = element["evaluator_id"];
+        next: (res) => {
+          this.evaluatorsDetails = res;
+        },
+        error: (e: AppError) => {
+          if (e instanceof NotFoundError) {
+            alert("Not found");
+          } else throw e;
+        },
+        complete: () => {
+          this.employees.forEach(employee => {
+            let evaluator_id = employee["evaluator_id"];
             this.evaluatorsDetails.forEach(evaluator => {
               if (evaluator["id"] === evaluator_id) {
                 this.evaluators.push(evaluator);
-              }
+              };
             });
-          });
-        },
-        error: (e: AppError) => {
-          if (e instanceof NotFoundError) {
-            alert("Not found");
-          } else throw e;
-        },
-        complete: () => console.log('Complete')
-
+          })
+        }
       })
-
   }
   trackByFn(index, evaluation) {
     return evaluation ? evaluation.id : undefined;
@@ -153,14 +169,12 @@ export class EvaluationComponent implements OnInit {
     this.showAdd = true
   }
   postEvaluation() {
-    this.evaluationModelObject.employee_id = this.evaluationForm.value.employee_id
     this.evaluationModelObject.task_id = this.evaluationForm.value.task_id
-    this.evaluationModelObject.evaluator_id = this.evaluationForm.value.evaluator_id
     this.evaluationModelObject.efficiency = this.evaluationForm.value.efficiency
     this.evaluationModelObject.timeliness = this.evaluationForm.value.timeliness
     this.evaluationModelObject.quality = this.evaluationForm.value.quality
     this.evaluationModelObject.accuracy = this.evaluationForm.value.accuracy
-    this.evaluationModelObject.remarks = this.evaluationForm.value.remarks
+    this.evaluationModelObject.remarks = this.evaluationForm.value.remarks ? this.evaluationForm.value.remarks : ""
 
     console.log(this.evaluationModelObject);
 
@@ -193,7 +207,6 @@ export class EvaluationComponent implements OnInit {
       .subscribe({
         next: async (res) => {
           this.ngOnInit()
-          console.log(this.evaluationlist);
         },
         error: (e: AppError) => {
           if (e instanceof NotFoundError) {
@@ -210,21 +223,19 @@ export class EvaluationComponent implements OnInit {
   }
 
   updateEvaluation() {
-    this.evaluationModelObject.employee_id = this.evaluationForm.value.employee_id
     this.evaluationModelObject.task_id = this.evaluationForm.value.task_id
-    this.evaluationModelObject.evaluator_id = this.evaluationForm.value.evaluator_id
     this.evaluationModelObject.efficiency = this.evaluationForm.value.efficiency
     this.evaluationModelObject.timeliness = this.evaluationForm.value.timeliness
     this.evaluationModelObject.quality = this.evaluationForm.value.quality
     this.evaluationModelObject.accuracy = this.evaluationForm.value.accuracy
-    this.evaluationModelObject.remarks = this.evaluationForm.value.remarks
+    this.evaluationModelObject.remarks = this.evaluationForm.value.remarks ? this.evaluationForm.value.remarks : ""
 
 
     this.evaluationService.update(this.evaluationModelObject.id, this.evaluationModelObject)
       .subscribe({
-        next: (res) => {
-          console.log(res);
-          alert("Evaluation Updated successfully");
+        next: async (res) => {
+          // console.log(res);
+          await alert("Evaluation Updated successfully");
         },
         error: (e: AppError) => {
           if (e instanceof NotFoundError) {
@@ -247,9 +258,7 @@ export class EvaluationComponent implements OnInit {
   onEditEvaluation(evaluation: any) {
     this.showAdd = false
     this.evaluationModelObject.id = evaluation.id
-    this.evaluationForm.controls["employee_id"].setValue(evaluation.employee_id)
     this.evaluationForm.controls["task_id"].setValue(evaluation.task_id)
-    this.evaluationForm.controls["evaluator_id"].setValue(evaluation.evaluator_id)
     this.evaluationForm.controls["efficiency"].setValue(evaluation.efficiency)
     this.evaluationForm.controls["timeliness"].setValue(evaluation.timeliness)
     this.evaluationForm.controls["quality"].setValue(evaluation.quality)
@@ -261,6 +270,6 @@ export class EvaluationComponent implements OnInit {
   viewEvaluation(evaluation: any) {
     console.log("viewEvaluation");
     this.evaluationView = evaluation
-    console.log(this.evaluationView);
+    // console.log(this.evaluationView);
   }
 }

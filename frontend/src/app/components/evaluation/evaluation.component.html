@@ -88,64 +88,87 @@
             </div>
             <div class="modal-body">
               <form [formGroup]="evaluationForm">
-                <!-- <div class="mb-2">
-                  <label for="evaluationName" class="form-label">Evaluation Name*</label>
-                  <input type="text" formControlName="evaluation" class="form-control form-control-sm" id="evaluationName"
-                    aria-describedby="evaluationName" placeholder="Evaluation Name" required="">
-                  <div *ngIf="evaluationName.touched && evaluationName.invalid" class="small text-danger text-start">
-                    <div *ngIf="evaluationName.errors['required']">*Evaluation Name is required</div>
+                <div class="mb-3">
+                  <div class="input-group input-group-sm">
+                    <label class="input-group-text" for="task_name" required="">Task Name</label>
+                    <select class="form-select" id="task_name" formControlName="task_id">
+                      <option selected>Choose...</option>
+                      <option [value]="task.id" *ngFor="let task of otherTasks">{{ task.task }}</option>
+                    </select>
                   </div>
-                </div>
-                <div class="mb-2">
-                  <label for="evaluationDescription" class="form-label">Evaluation Description*</label>
-                  <textarea class="form-control form-control-sm" formControlName="description" id="evaluationDescription"
-                    rows="1" placeholder="Evaluation Description" required></textarea>
-                  <div *ngIf="description.touched && description.invalid" class="small text-danger text-start">
-                    <div *ngIf="description.errors['required']">*Evaluation Description is required</div>
+                  <div *ngIf="task_id.touched && task_id.invalid" class="small text-danger text-start">
+                    <div *ngIf="task_id.errors['required']">*Task Name is required</div>
                   </div>
                 </div>
                 <div class="mb-3">
                   <div class="input-group input-group-sm">
-                    <label class="input-group-text" for="assignedToSelect">Assigned To*</label>
-                    <select class="form-select" id="assignedToSelect" formControlName="employee_id" required="">
+                    <label class="input-group-text" for="efficiency" required="">Efficiency</label>
+                    <select class="form-select" id="efficiency" formControlName="efficiency">
                       <option selected>Choose...</option>
-                      <option [value]="employee.id" *ngFor="let employee of employeeDetails">{{ employee.first_name }}
-                        {{ employee.last_name }}
-                      </option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
                     </select>
                   </div>
-                  <div *ngIf="employee_id.touched && employee_id.invalid" class="small text-danger text-start">
-                    <div *ngIf="employee_id.errors['required']">*Assigned To is required</div>
+                  <div *ngIf="efficiency.touched && efficiency.invalid" class="small text-danger text-start">
+                    <div *ngIf="efficiency.errors['required']">*Efficiency Score is required</div>
                   </div>
-                </div>
-                <div class="mb-2">
-                  <label for="dueDate" class="form-label">Due Date*</label>
-                  <input type="date" formControlName="due_date" class="form-control form-control-sm" id="dueDate"
-                    aria-describedby="dueDate" required [min]="currentDate">
-                  <div *ngIf="dueDate.touched && dueDate.invalid" class="small text-danger text-start">
-                    <div *ngIf="dueDate.errors['required']">*Due Date is required</div>
-                  </div>
-                </div>
-
-                <div class="mb-2">
-                  <label for="completedDate" class="form-label">Completed Date</label>
-                  <input type="date" formControlName="completed" class="form-control form-control-sm" id="completedDate"
-                    aria-describedby="completedDate" [max]="currentDate">
                 </div>
                 <div class="mb-3">
                   <div class="input-group input-group-sm">
-                    <label class="input-group-text" for="statusSelect" required="">Status</label>
-                    <select class="form-select" id="statusSelect" formControlName="status">
+                    <label class="input-group-text" for="timeliness" required="">Timeliness</label>
+                    <select class="form-select" id="timeliness" formControlName="timeliness">
                       <option selected>Choose...</option>
-                      <option value="1">Pending</option>
-                      <option value="2">Cancelled</option>
-                      <option value="3">Completed</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
                     </select>
                   </div>
-                  <div *ngIf="status.touched && status.invalid" class="small text-danger text-start">
-                    <div *ngIf="status.errors['required']">*Evaluation Status is required</div>
+                  <div *ngIf="timeliness.touched && timeliness.invalid" class="small text-danger text-start">
+                    <div *ngIf="timeliness.errors['required']">*Timeliness Score is required</div>
                   </div>
-                </div> -->
+                </div>
+                <div class="mb-3">
+                  <div class="input-group input-group-sm">
+                    <label class="input-group-text" for="quality" required="">Quality</label>
+                    <select class="form-select" id="quality" formControlName="quality">
+                      <option selected>Choose...</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+                  <div *ngIf="quality.touched && quality.invalid" class="small text-danger text-start">
+                    <div *ngIf="quality.errors['required']">*Quality Score is required</div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="input-group input-group-sm">
+                    <label class="input-group-text" for="accuracy" required="">Accuracy</label>
+                    <select class="form-select" id="accuracy" formControlName="accuracy">
+                      <option selected>Choose...</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+                  <div *ngIf="accuracy.touched && accuracy.invalid" class="small text-danger text-start">
+                    <div *ngIf="accuracy.errors['required']">*Accuracy Score is required</div>
+                  </div>
+                </div>
+                <div class="mb-2">
+                  <label for="remarks" class="form-label">Remarks</label>
+                  <textarea class="form-control form-control-sm" formControlName="remarks" id="remarks" rows="2"
+                    placeholder="Remarks"></textarea>
+                </div>
               </form>
             </div>
             <div class="modal-footer">
