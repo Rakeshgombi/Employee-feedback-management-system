@@ -2,15 +2,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from db import database, engine, metadata
-from routers import (departments, designations, employees, evaluator, ratings,
-                     systemSettings, taskProgress, tasks, users)
+from routers import (auth, departments, designations, employees, evaluator,
+                     ratings, systemSettings, taskProgress, tasks, users)
 
 app = FastAPI()
 
 origins = [
     "http://localhost:4200",
-    "http://localhost.tiangolo.com",
-    "https://localhost.tiangolo.com",
     "http://localhost",
 ]
 
@@ -50,3 +48,4 @@ app.include_router(ratings.router)
 app.include_router(systemSettings.router)
 app.include_router(taskProgress.router)
 app.include_router(users.router)
+app.include_router(auth.router)

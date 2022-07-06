@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { baseUrl } from 'src/environments/environment';
 import { DataService } from './data.service';
 
 @Injectable({
@@ -7,7 +8,7 @@ import { DataService } from './data.service';
 })
 export class DepartmentsService extends DataService {
 
-  constructor(_http: HttpClient) { 
-    super("http://127.0.0.1:8000/departments/", _http)
+  constructor(_http: HttpClient) {
+    super(`${baseUrl}departments/`, _http)
   }
 }

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { baseUrl } from 'src/environments/environment';
 
 import { DataService } from './data.service';
 
@@ -9,7 +10,7 @@ import { DataService } from './data.service';
 
 export class EvaluatorsService extends DataService {
   constructor(_http: HttpClient) {
-    let evaluatorsUrl = "http://127.0.0.1:8000/evaluators/";
+    let evaluatorsUrl = `${baseUrl}evaluators/`;
     super(evaluatorsUrl, _http);
   }
 }

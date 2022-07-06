@@ -1,4 +1,3 @@
-
 from typing import List
 
 from db import DepartmentList, database, EmployeeList

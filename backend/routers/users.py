@@ -5,6 +5,7 @@ from db import Users, database
 from fastapi import APIRouter, HTTPException, status
 from inputSchemas import UserSchemaIn
 from resSchemas import UserSchema
+from passlib.hash import pbkdf2_sha256
 
 router = APIRouter(tags=["Users"])
 
@@ -25,6 +26,10 @@ async def get_user_detail(id: int):
     return {**user}
 
 
+def get_password_hash(password):
+    return pbkdf2_sha256.hash(password)
+
+
 @router.post("/users", status_code=status.HTTP_201_CREATED, response_model=UserSchema)
 async def create_user(new_users: UserSchemaIn):
     query = Users.select().where(Users.c.email == new_users.email)
@@ -36,7 +41,7 @@ async def create_user(new_users: UserSchemaIn):
         first_name=new_users.first_name,
         last_name=new_users.last_name,
         email=new_users.email,
-        password=new_users.password,
+        password=get_password_hash(new_users.password),
         avatar=new_users.avatar,
         date_created=datetime.now()
     )
@@ -56,11 +61,15 @@ async def update_user(id: int, new_users: UserSchemaIn):
             first_name=new_users.first_name,
             last_name=new_users.last_name,
             email=new_users.email,
-            password=new_users.password,
             avatar=new_users.avatar,
         )
+        if new_users.password:
+            query = Users.update().where(id == Users.c.id).values(
+                password=get_password_hash(new_users.password),
+            )
+
         last_record_id = await database.execute(query)
-        return {**new_users.dict(), "id": last_record_id, "date_created": user.date_created}
+        return {**new_users.dict(), "id": id, "date_created": user.date_created}
 
 
 @router.delete("/users/{id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -74,4 +83,3 @@ async def delete_user(id: int):
 
     query = Users.delete().where(Users.c.id == id)
     user = await database.execute(query)
-    print({'detail': 'Task Progress deleted Successfully'})

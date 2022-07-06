@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { baseUrl } from 'src/environments/environment';
 
 import { DataService } from './data.service';
 
@@ -9,7 +10,7 @@ import { DataService } from './data.service';
 
 export class EmployeesService extends DataService {
   constructor(_http: HttpClient) {
-    super("http://127.0.0.1:8000/employees/", _http);
+    super(`${baseUrl}employees/`, _http);
   }
 }
 

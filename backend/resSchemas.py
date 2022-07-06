@@ -110,9 +110,13 @@ class UserSchema(BaseModel):
     first_name: str
     last_name: str
     email: str
-    password: str
     avatar: str
     date_created: str
 
     class Config:
         orm_mode = True
+
+
+class LoginSchema(BaseModel):
+    email: str
+    password: str

@@ -70,7 +70,8 @@
       <li>
         <hr class="dropdown-divider">
       </li>
-      <li><a class="dropdown-item" routerLink="signin">Sign out</a></li>
+      <li [class]="isloggedIn? '': 'd-none'"><a class="dropdown-item" routerLink="signout"(click)="logout()">Signout</a></li>
+      <li [class]="isloggedIn? 'd-none': ''"><a class="dropdown-item" routerLink="signin">Signin</a></li>
     </ul>
   </div>
 </div>

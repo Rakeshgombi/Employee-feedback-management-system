@@ -1,19 +1,9 @@
 import datetime
 import enum
-from databases import Database
-from sqlalchemy import (
-    Enum,
-    create_engine,
-    MetaData,
-    Table,
-    Column,
-    Integer,
-    String,
-    ForeignKey,
-    DateTime,
-    Boolean
-)
 
+from databases import Database
+from sqlalchemy import (Boolean, Column, DateTime, Enum, ForeignKey, Integer,
+                        MetaData, String, Table, create_engine)
 
 DATABASE_URL = "mysql://root:@localhost/employees_fb_db"
 

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { baseUrl } from 'src/environments/environment';
 import { DataService } from './data.service';
 
 @Injectable({
@@ -7,7 +8,7 @@ import { DataService } from './data.service';
 })
 export class UserService extends DataService {
   constructor(_http: HttpClient) {
-    let usersUrl = "http://127.0.0.1:8000/users/";
+    let usersUrl = `${baseUrl}users/`;
     super(usersUrl, _http)
   }
 }

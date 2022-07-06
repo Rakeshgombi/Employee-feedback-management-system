@@ -20,19 +20,19 @@ export class UserComponent implements OnInit {
   employeeDetails: any;
   employees = [];
   bodyText: string;
+  showAdd: boolean = true;
   userForm = new FormGroup({
     first_name: new FormControl('', Validators.required),
     last_name: new FormControl('', Validators.required),
     email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+    password: new FormControl(''),
     avatar: new FormControl('')
   })
   userView: any;
-  showAdd: boolean = true;
   userModelObject: UserModule = new UserModule();
   yourDate = new Date()
   currentDate = this.yourDate.toISOString().split('T')[0]
-
+  passwordReq: boolean = false;
   faAdd = faAdd
   faPencil = faPencil
   faTrash = faTrash
@@ -54,9 +54,6 @@ export class UserComponent implements OnInit {
   }
   get email() {
     return this.userForm.get('email')
-  }
-  get password() {
-    return this.userForm.get('password')
   }
 
 
@@ -83,9 +80,9 @@ export class UserComponent implements OnInit {
 
   addUser() {
     this.userForm.reset();
-    this.showAdd = true
-  }
-
+    this.showAdd = true;
+    this.email.errors['required']
+  };
   postUser() {
     this.userModelObject.first_name = this.userForm.value.first_name;
     this.userModelObject.last_name = this.userForm.value.last_name;
@@ -144,7 +141,7 @@ export class UserComponent implements OnInit {
     this.userModelObject.last_name = this.userForm.value.last_name;
     this.userModelObject.last_name = this.userForm.value.last_name;
     this.userModelObject.email = this.userForm.value.email;
-    this.userModelObject.password = this.userForm.value.password;
+    this.userModelObject.password = this.userForm.value.password ? this.userForm.value.password : '';
     this.userModelObject.avatar = (this.userForm.value.avatar ? this.userForm.value.avatar : '');
 
     this.userService.update(this.userModelObject.id, this.userModelObject)
