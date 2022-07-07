@@ -167,7 +167,7 @@ export class EmployeesComponent implements OnInit {
       })
   }
 
-  trackByFn(index, employee) {
+  trackByFn(employee) {
     return employee ? employee.id : undefined;
   }
 
@@ -192,7 +192,7 @@ export class EmployeesComponent implements OnInit {
 
     this.employeesService.create(this.employeeModelObject)
       .subscribe({
-        next: (res) => {
+        next: () => {
           alert("Employee created successfully");
         },
         error: (e: AppError) => {
@@ -216,7 +216,7 @@ export class EmployeesComponent implements OnInit {
   deleteEmployee(id: number) {
     this.employeesService.deleteById(id)
       .subscribe({
-        next: async (res) => {
+        next: async () => {
           this.ngOnInit()
           // console.log(this.employeelist);
         },
@@ -249,7 +249,7 @@ export class EmployeesComponent implements OnInit {
 
     this.employeesService.update(this.employeeModelObject.id, this.employeeModelObject)
       .subscribe({
-        next: (res) => {
+        next: () => {
           alert("Employee Updated successfully");
         },
         error: (e: AppError) => {

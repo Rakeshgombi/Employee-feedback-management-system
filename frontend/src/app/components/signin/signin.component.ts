@@ -17,6 +17,7 @@ export class SigninComponent implements OnInit {
     email: new FormControl('', Validators.required),
     password: new FormControl('', [Validators.required, Validators.minLength(4)])
   })
+  isloggedIn: boolean;
   FormObjectModel: LoginModule = new LoginModule()
 
   constructor(private loginService: LoginService, private router: Router) { }
@@ -29,6 +30,10 @@ export class SigninComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isloggedIn = this.loginService.isLoggedIn()
+    if(this.isloggedIn){
+      this.router.navigate([''])
+    }
   }
 
   onLoginPost() {

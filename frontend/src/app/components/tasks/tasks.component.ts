@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { faAdd, faBarsProgress, faCheck, faCircleExclamation, faEye, faPencil, faTrash, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { AppError } from '../common/app-error';
 import { BadRequestError } from '../common/bad-request-error';
 import { NotFoundError } from '../common/not-found-error';
 import { EmployeesService } from '../services/employees.service';
 import { TasksService } from '../services/tasks.service';
 import { TaskModel } from './task.module';
-import { faAdd, faBarsProgress, faCheck, faCircleExclamation, faEye, faPencil, faTrash, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({

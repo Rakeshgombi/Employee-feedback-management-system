@@ -50,7 +50,7 @@ export class DepartmentsComponent implements OnInit {
       })
   }
 
-  trackByDepartment(index, department) {
+  trackByDepartment(department) {
     return department ? department.id : undefined;
   }
 
@@ -124,7 +124,7 @@ export class DepartmentsComponent implements OnInit {
   deleteDepartment(id: number) {
     this.departmentService.deleteById(id)
       .subscribe({
-        next: async (res) => {
+        next: async () => {
           this.ngOnInit()
           console.log(this.departmentList);
         },

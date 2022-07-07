@@ -1,14 +1,14 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { faAdd, faBarsProgress, faCheck, faCircleExclamation, faEye, faPencil, faTrash, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { AppError } from '../common/app-error';
 import { BadRequestError } from '../common/bad-request-error';
 import { NotFoundError } from '../common/not-found-error';
 import { EmployeesService } from '../services/employees.service';
-import { EvaluationModule } from './evaluation.module';
-import { faAdd, faBarsProgress, faCheck, faCircleExclamation, faEye, faPencil, faTrash, faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { EvaluationService } from '../services/evaluation.service';
-import { TasksService } from '../services/tasks.service';
 import { EvaluatorsService } from '../services/evaluators.service';
+import { TasksService } from '../services/tasks.service';
+import { EvaluationModule } from './evaluation.module';
 
 
 @Component({
@@ -52,7 +52,7 @@ export class EvaluationComponent implements OnInit {
   faCircleExclamation = faCircleExclamation
   faEye = faEye
   faXmark = faXmark
-  constructor(private evaluationService: EvaluationService, private employeesService: EmployeesService, private taskService: TasksService, private evaluatorsService: EvaluatorsService, private ngZone: NgZone) { }
+  constructor(private evaluationService: EvaluationService, private employeesService: EmployeesService, private taskService: TasksService, private evaluatorsService: EvaluatorsService) { }
   getAll: any;
 
   get task_id() {
@@ -161,7 +161,7 @@ export class EvaluationComponent implements OnInit {
         }
       })
   }
-  trackByFn(index, evaluation) {
+  trackByFn(evaluation) {
     return evaluation ? evaluation.id : undefined;
   }
   addEvaluation() {
@@ -205,7 +205,7 @@ export class EvaluationComponent implements OnInit {
   deleteEvaluation(id: number) {
     this.evaluationService.deleteById(id)
       .subscribe({
-        next: async (res) => {
+        next: async () => {
           this.ngOnInit()
         },
         error: (e: AppError) => {
@@ -233,7 +233,7 @@ export class EvaluationComponent implements OnInit {
 
     this.evaluationService.update(this.evaluationModelObject.id, this.evaluationModelObject)
       .subscribe({
-        next: async (res) => {
+        next: async () => {
           // console.log(res);
           await alert("Evaluation Updated successfully");
         },

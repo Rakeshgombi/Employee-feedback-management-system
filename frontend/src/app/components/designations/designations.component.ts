@@ -50,7 +50,7 @@ export class DesignationsComponent implements OnInit {
       })
   }
 
-  trackByDesignation(index, designation) {
+  trackByDesignation(designation) {
     return designation ? designation.id : undefined;
   }
 
@@ -124,7 +124,7 @@ export class DesignationsComponent implements OnInit {
   deleteDesignation(id: number) {
     this.designationService.deleteById(id)
       .subscribe({
-        next: async (res) => {
+        next: async () => {
           this.ngOnInit()
           console.log(this.designationList);
         },

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { AppError } from '../common/app-error';
 import { NotFoundError } from '../common/not-found-error';
 import { DepartmentsService } from '../services/departments.service';
 import { DesignationsService } from '../services/designations.service';
-import { UserService } from '../services/user.service';
 import { EmployeesService } from '../services/employees.service';
 import { EvaluatorsService } from '../services/evaluators.service';
 import { TasksService } from '../services/tasks.service';
+import { UserService } from '../services/user.service';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
