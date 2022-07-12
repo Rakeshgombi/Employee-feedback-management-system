@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { faBuilding, faEnvelope, faIdCard, faUser, faUserCheck, faUserGear } from '@fortawesome/free-solid-svg-icons';
 import { NotFoundError } from 'rxjs/internal/util/NotFoundError';
-import { switchMap } from 'rxjs/operators';
 import { AppError } from '../common/app-error';
 import { DepartmentsService } from '../services/departments.service';
-import { DesignationsService } from '../services/designations.service';
 import { EmployeesService } from '../services/employees.service';
 import { EvaluatorsService } from '../services/evaluators.service';
 import { UserService } from '../services/user.service';
