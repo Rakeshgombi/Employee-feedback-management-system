@@ -20,7 +20,7 @@
           <div *ngIf="password.errors['required']">*Password is required</div>
         </div>
       </div>
-      <button class="w-100 btn btn-lg btn-primary" type="submit" (click)="onLoginPost()">Sign in</button>
+      <button class="w-100 btn btn-lg btn-primary" type="submit" (click)="onLoginPost()"  [disabled]="!formLogin.valid">Sign in</button>
       <p class="mt-5 mb-3 text-muted">© 2017–2022</p>
     </form>
   </main>

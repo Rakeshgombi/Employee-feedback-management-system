@@ -9,14 +9,21 @@ import { EmployeesComponent } from './components/employees/employees.component';
 import { EvaluationComponent } from './components/evaluation/evaluation.component';
 import { EvaluatorComponent } from './components/evaluator/evaluator.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { UserComponent } from './components/users/user.component';
 
 const routes: Routes = [
   {
+    path: 'signin',
+    title: 'Signin - Employee Feedback Management System',
+    component: SigninComponent
+  },
+  {
     path: '',
     component: DashboardComponent,
+    title: 'Dashboard - Employee Feedback Management System',
     canActivate: [AuthGuard, RoleGuardGuard],
     data: {
       expectedRoles: ['admin', 'employee', 'evaluator']
@@ -25,17 +32,15 @@ const routes: Routes = [
   {
     path: 'tasks',
     component: TasksComponent,
+    title: 'Tasks - Employee Feedback Management System',
     canActivate: [AuthGuard, RoleGuardGuard],
     data: {
       expectedRoles: ['admin', 'employee', 'evaluator']
     }
   },
   {
-    path: 'signin',
-    component: SigninComponent
-  },
-  {
     path: 'evaluation',
+    title: 'Evaluation - Employee Feedback Management System',
     component: EvaluationComponent,
     canActivate: [AuthGuard, RoleGuardGuard],
     data: {
@@ -44,6 +49,7 @@ const routes: Routes = [
   },
   {
     path: 'departments',
+    title: 'Departments - Employee Feedback Management System',
     component: DepartmentsComponent,
     canActivate: [AuthGuard, RoleGuardGuard],
     data: {
@@ -52,6 +58,7 @@ const routes: Routes = [
   },
   {
     path: 'designations',
+    title: 'Designation - Employee Feedback Management System',
     component: DesignationsComponent,
     canActivate: [AuthGuard, RoleGuardGuard],
     data: {
@@ -60,6 +67,7 @@ const routes: Routes = [
   },
   {
     path: 'employees',
+    title: 'Employees - Employee Feedback Management System',
     component: EmployeesComponent,
     canActivate: [AuthGuard, RoleGuardGuard],
     data: {
@@ -68,6 +76,7 @@ const routes: Routes = [
   },
   {
     path: 'evaluator',
+    title: 'Evaluator - Employee Feedback Management System',
     component: EvaluatorComponent,
     canActivate: [AuthGuard,
       RoleGuardGuard], data: {
@@ -76,6 +85,7 @@ const routes: Routes = [
   },
   {
     path: 'users',
+    title: 'Users - Employee Feedback Management System',
     component: UserComponent,
     canActivate: [AuthGuard, RoleGuardGuard],
     data: {
@@ -83,7 +93,17 @@ const routes: Routes = [
     }
   },
   {
+    path: 'profile/:role/:id',
+    title: 'Profile - Employee Feedback Management System',
+    component: ProfileComponent,
+    canActivate: [AuthGuard, RoleGuardGuard],
+    data: {
+      expectedRoles: ['admin', 'employee', 'evaluator']
+    }
+  },
+  {
     path: '**',
+    title: 'Not Found - Employee Feedback Management System',
     component: NotFoundComponent
   },
 ];

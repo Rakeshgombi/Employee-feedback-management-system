@@ -15,9 +15,13 @@ export class RoleGuardGuard implements CanActivate {
     return this.isAuthorised(route)
   }
   private isAuthorised(route: ActivatedRouteSnapshot): boolean {
-    let roles= Array(this.loginService .haveAccess())
+    let roles = Array(this.loginService.haveAccess()["role"])
+    // console.log(roles);
+    
     let expectedRoles = route.data['expectedRoles'];
-    let roleMatches = roles.findIndex(role => expectedRoles.indexOf(role) !== -1)
-    return roleMatches < 0? false : true
+    let roleMatches = roles.findIndex(role =>
+      expectedRoles.indexOf(role) !== -1
+    )
+    return roleMatches < 0 ? false : true
   }
 }

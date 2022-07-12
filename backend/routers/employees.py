@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import List
+from routers.users import get_password_hash
 
 from db import EmployeeList, database
 from fastapi import APIRouter, HTTPException, status
@@ -33,7 +34,7 @@ async def create_employee(new_employee: EmployeeListSchemaIn):
         middle_name=new_employee.middle_name,
         last_name=new_employee.last_name,
         email=new_employee.email,
-        password=new_employee.password,
+        password=get_password_hash(new_employee.password),
         department_id=new_employee.department_id,
         designation_id=new_employee.designation_id,
         evaluator_id=new_employee.evaluator_id,
@@ -53,15 +54,16 @@ async def update_employee(id: int, new_employee: EmployeeListSchemaIn):
             status_code=status.HTTP_404_NOT_FOUND, detail="employee not found")
     else:
         query = EmployeeList.update().where(id == EmployeeList.c.id).values(
-            employee_id=new_employee.employee_id,
-            first_name=new_employee.first_name,
-            middle_name=new_employee.middle_name,
-            last_name=new_employee.last_name,
-            email=new_employee.email,
-            password=new_employee.password,
-            department_id=new_employee.department_id,
-            designation_id=new_employee.designation_id,
-            evaluator_id=new_employee.evaluator_id,
+            # update only the fields that are not null
+            employee_id=new_employee.employee_id or employee.employee_id,
+            first_name=new_employee.first_name or employee.first_name,
+            middle_name=new_employee.middle_name or employee.middle_name,
+            last_name=new_employee.last_name or employee.last_name,
+            email=new_employee.email or employee.email,
+            password=get_password_hash(new_employee.password or employee.password),
+            department_id=new_employee.department_id or employee.department_id,
+            designation_id=new_employee.designation_id or employee.designation_id,
+            evaluator_id=new_employee.evaluator_id or employee.evaluator_id,
             avatar=new_employee.avatar
         )
         last_record_id = await database.execute(query)

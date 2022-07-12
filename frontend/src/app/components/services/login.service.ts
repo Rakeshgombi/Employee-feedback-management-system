@@ -12,7 +12,12 @@ export class LoginService extends DataService {
     super(tasklistUrl, _http);
   }
   isLoggedIn() {
-    return localStorage.getItem('loginToken') != null;
+    let tokenExists = localStorage.getItem('loginToken') != null;
+    if (tokenExists) {
+      return true
+    } else {
+      return false
+    }
   }
 
   getToken() {
@@ -21,10 +26,11 @@ export class LoginService extends DataService {
 
   haveAccess(): String {
     var logginToken = localStorage.getItem('loginToken') || '';
-    var _extractedToken = logginToken.split('.')[1];
-    var _atobData = atob(_extractedToken);
-    var _finalData = JSON.parse(_atobData);
-    console.log(_finalData);
-    return _finalData.role
+    if (logginToken) {
+      var _extractedToken = logginToken.split('.')[1];
+      var _atobData = atob(_extractedToken);
+      var _finalData = JSON.parse(_atobData);
+    }
+    return _finalData? _finalData : ''
   }
 }

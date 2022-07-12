@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotFoundError } from 'rxjs/internal/util/NotFoundError';
 import { AppError } from '../common/app-error';
 import { BadRequestError } from '../common/bad-request-error';
 import { LoginService } from '../services/login.service';
+import { SidenavComponent } from '../sidenav/sidenav.component';
 import { LoginModule } from './login.module';
 
 @Component({
@@ -19,8 +21,7 @@ export class SigninComponent implements OnInit {
   })
   isloggedIn: boolean;
   FormObjectModel: LoginModule = new LoginModule()
-
-  constructor(private loginService: LoginService, private router: Router) { }
+  constructor(private loginService: LoginService, private router: Router, private sidenav: SidenavComponent, @Inject(DOCUMENT) private document: Document) { }
 
   get email() {
     return this.formLogin.get('email')
@@ -31,7 +32,7 @@ export class SigninComponent implements OnInit {
 
   ngOnInit(): void {
     this.isloggedIn = this.loginService.isLoggedIn()
-    if(this.isloggedIn){
+    if (this.isloggedIn) {
       this.router.navigate([''])
     }
   }
@@ -46,7 +47,9 @@ export class SigninComponent implements OnInit {
         next: (res) => {
           alert("Logged in successfully");
           localStorage.setItem('loginToken', res.access_token);
+          this.sidenav.reload();
           this.router.navigate(['']);
+          this.document.location.reload();
         },
         error: (e: AppError) => {
           if (e instanceof NotFoundError) {

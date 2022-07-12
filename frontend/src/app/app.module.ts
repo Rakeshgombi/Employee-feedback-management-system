@@ -27,6 +27,7 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { UserComponent } from './components/users/user.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { UserComponent } from './components/users/user.component';
     NotFoundComponent,
     SigninComponent,
     EvaluatorComponent,
+    ProfileComponent,
   ],
   imports: [
     AppRoutingModule,

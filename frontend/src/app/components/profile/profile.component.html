@@ -1,0 +1,95 @@
+<div class="p-2 row d-flex justify-content-around align-items-start">
+  <div class="col-12 col-md-6 p-3 my-2 card shadow-sm">
+    <h3 class="card-title fs-3">Profile Information</h3>
+    <div class="card-body">
+      <div class="row mb-3">
+        <div class="col-1 d-flex justify-content-around align-items-center">
+          <fa-icon [icon]="faUser" class="h1"></fa-icon>
+        </div>
+        <div class="box col-11">
+          <div class="property">
+            <h3 class="fs-6 mb-1">Name</h3>
+          </div>
+          <div class="value border-bottom">
+            <p class="fs-4">{{ user?.first_name + " " + user?.last_name }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-1 d-flex justify-content-around align-items-center">
+          <fa-icon [icon]="faEnvelope" class="h1"></fa-icon>
+        </div>
+        <div class="box col-11">
+          <div class="property">
+            <h3 class="fs-6 mb-1">Email</h3>
+          </div>
+          <div class="value border-bottom">
+            <p class="fs-4">{{ user?.email }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-1 d-flex justify-content-around align-items-center">
+          <fa-icon [icon]="faUserGear" class="h1"></fa-icon>
+        </div>
+        <div class="box col-11">
+          <div class="property">
+            <h3 class="fs-6 mb-1">Designation</h3>
+          </div>
+          <div class="value border-bottom">
+            <p class="fs-4">{{ role | titlecase }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div [class]="role !== 'admin'? '': 'd-none'">
+        <div class="row mb-3">
+          <div class="col-1 d-flex justify-content-around align-items-center">
+            <fa-icon [icon]="faIdCard" class="h1"></fa-icon>
+          </div>
+          <div class="box col-11">
+            <div class="property">
+              <h3 class="fs-6 mb-1">Employee Id</h3>
+            </div>
+            <div class="value border-bottom">
+              <p class="fs-4">{{ user?.employee_id }}</p>
+            </div>
+          </div>
+        </div>
+        <div [class]="role === 'employee'? '': 'd-none'">
+          <div class="row mb-3">
+            <div class="col-1 d-flex justify-content-around align-items-center">
+              <fa-icon [icon]="faBuilding" class="h1"></fa-icon>
+            </div>
+            <div class="box col-11">
+              <div class="property">
+                <h3 class="fs-6 mb-1">Department</h3>
+              </div>
+              <div class="value border-bottom">
+                <p class="fs-4">{{ department?.department }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-1 d-flex justify-content-around align-items-center">
+              <fa-icon [icon]="faUserCheck" class="h1"></fa-icon>
+            </div>
+            <div class="box col-11">
+              <div class="property">
+                <h3 class="fs-6 mb-1">Evaluator</h3>
+              </div>
+              <div class="value border-bottom">
+                <p class="fs-4">{{ evaluator?.first_name + " " + evaluator?.last_name }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-5 p-3 my-2 shadow">
+    <h3 class="card-title fs-3">Change Password</h3>
+  </div>
+</div>

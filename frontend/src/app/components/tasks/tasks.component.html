@@ -185,7 +185,7 @@
                 <div class="mb-2 border-bottom">
                   <p class="">
                     <strong class="d-block text-gray-dark">Assigned To</strong>
-                    {{ taskView? employees[taskView.employee_id]: '' }}
+                    {{ taskView? employees[taskView.employee_id].first_name + " " + employees[taskView.employee_id].last_name: '' }}
                   </p>
                 </div>
                 <div class="mb-2 border-bottom">

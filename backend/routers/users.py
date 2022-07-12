@@ -26,7 +26,7 @@ async def get_user_detail(id: int):
     return {**user}
 
 
-def get_password_hash(password):
+def get_password_hash(password): 
     return pbkdf2_sha256.hash(password)
 
 
@@ -58,16 +58,12 @@ async def update_user(id: int, new_users: UserSchemaIn):
             status_code=status.HTTP_404_NOT_FOUND, detail="Task Progress not found")
     else:
         query = Users.update().where(id == Users.c.id).values(
-            first_name=new_users.first_name,
-            last_name=new_users.last_name,
-            email=new_users.email,
+            first_name=new_users.first_name or user.first_name,
+            last_name=new_users.last_name or user.last_name,
+            email=new_users.email or user.email,
+            password=get_password_hash(new_users.password or user.password),
             avatar=new_users.avatar,
         )
-        if new_users.password:
-            query = Users.update().where(id == Users.c.id).values(
-                password=get_password_hash(new_users.password),
-            )
-
         last_record_id = await database.execute(query)
         return {**new_users.dict(), "id": id, "date_created": user.date_created}
 

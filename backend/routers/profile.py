@@ -1,22 +1,15 @@
-from db import EmployeeList, EvaluatorList, Users, database
+from db import EmployeeList, Users, database
 from fastapi import APIRouter, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from passlib.hash import pbkdf2_sha256
 from resSchemas import LoginSchema
 
-from routers.token import create_access_token
+
 
 router = APIRouter(tags=["auth"])
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-
-def verify_password(plain_password, hashed_password):
-    return pbkdf2_sha256.verify(plain_password, hashed_password)
-
-
-@router.post("/login")
+@router.post("/profile")
 async def login(request: LoginSchema):
-    print(request)
     query = Users.select().where(Users.c.email == request.email)
     user = await database.fetch_one(query=query)
     role = 'admin'
@@ -27,7 +20,7 @@ async def login(request: LoginSchema):
         role = 'employee'
         print(user)
     if not user:
-        query = Users.select().where(EvaluatorList.c.email == request.email)
+        query = Users.select().where(EmployeeList.c.email == request.email)
         user = await database.fetch_one(query=query)
         role = 'evaluator'
         print(user)

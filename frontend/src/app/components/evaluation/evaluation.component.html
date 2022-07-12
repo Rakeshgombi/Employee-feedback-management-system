@@ -24,13 +24,13 @@
               <p class="p-0 m-0">{{ i + 1 }}</p>
             </th>
             <td scope="col" class="text-center border-end">
-              <p class="p-0 m-0">{{ tasks[i]? tasks[i].task : '' }}</p>
+              <p class="p-0 m-0">{{ tasks[i]?.task}}</p>
             </td>
             <td scope="col" class="text-center border-end" style="max-width: 50px !important;">
-              <p class="p-0 m-0">{{ employees[i]? (employees[i].first_name + " " + employees[i].last_name) : ""}}</p>
+              <p class="p-0 m-0">{{ employees[i]?.first_name + " " + employees[i]?.last_name }}</p>
             </td>
             <td scope="col" class="text-center border-end" style="max-width: 50px !important;">
-              <p class="p-0 m-0">{{ evaluators[i]? (evaluators[i].first_name + " " + evaluators[i].last_name) : "" }}
+              <p class="p-0 m-0">{{ evaluators[i]?.first_name + " " + evaluators[i]?.last_name }}
               </p>
             </td>
             <td scope="col" class="text-center border-end" style="max-width: 50px !important;">

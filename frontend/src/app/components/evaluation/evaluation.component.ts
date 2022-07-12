@@ -20,10 +20,10 @@ import { EvaluationModule } from './evaluation.module';
 export class EvaluationComponent implements OnInit {
   evaluationlist: any;
   tasklist: any
-  employeeDetails: any;
-  taskDetails: any;
   otherTasks: any;
   otheremployees: any;
+  taskDetails: any;
+  employeeDetails: any;
   evaluatorsDetails: any;
   employees = [];
   tasks = [];
@@ -37,6 +37,7 @@ export class EvaluationComponent implements OnInit {
     accuracy: new FormControl(0, Validators.required),
     remarks: new FormControl(""),
   })
+
   evaluationView: any;
   showAdd: boolean = true;
   evaluationModelObject: EvaluationModule = new EvaluationModule();
@@ -52,8 +53,9 @@ export class EvaluationComponent implements OnInit {
   faCircleExclamation = faCircleExclamation
   faEye = faEye
   faXmark = faXmark
-  constructor(private evaluationService: EvaluationService, private employeesService: EmployeesService, private taskService: TasksService, private evaluatorsService: EvaluatorsService) { }
   getAll: any;
+
+  constructor(private evaluationService: EvaluationService, private employeesService: EmployeesService, private taskService: TasksService, private evaluatorsService: EvaluatorsService) { }
 
   get task_id() {
     return this.evaluationForm.get('task_id')
@@ -70,7 +72,6 @@ export class EvaluationComponent implements OnInit {
   get accuracy() {
     return this.evaluationForm.get('accuracy')
   }
-
 
   ngOnInit(): void {
     // console.log(this.currentDate);

@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import List
+from routers.users import get_password_hash
 
 from db import EmployeeList, EvaluatorList, Ratings, database
 from fastapi import APIRouter, HTTPException, status
@@ -34,7 +35,7 @@ async def create_evaluator(new_evaluator: EvaluatorListSchemaIn):
         middle_name=new_evaluator.middle_name,
         last_name=new_evaluator.last_name,
         email=new_evaluator.email.lower(),
-        password=new_evaluator.password,
+        password=get_password_hash(new_evaluator.password),
         avatar=new_evaluator.avatar,
         date_created=datetime.now()
     )
@@ -51,12 +52,12 @@ async def update_evaluator(id: int, new_evaluator: EvaluatorListSchemaIn):
             status_code=status.HTTP_404_NOT_FOUND, detail="employee not found")
     else:
         query = EvaluatorList.update().where(id == EvaluatorList.c.id).values(
-            employee_id=new_evaluator.employee_id,
-            first_name=new_evaluator.first_name,
-            middle_name=new_evaluator.middle_name,
-            last_name=new_evaluator.last_name,
-            email=new_evaluator.email.lower(),
-            password=new_evaluator.password,
+            employee_id=new_evaluator.employee_id or evaluator.employee_id,
+            first_name=new_evaluator.first_name or evaluator.first_name,
+            middle_name=new_evaluator.middle_name or evaluator.middle_name,
+            last_name=new_evaluator.last_name or evaluator.last_name,
+            email=new_evaluator.email.lower() or evaluator.email,
+            password=get_password_hash(new_evaluator.password or evaluator.password),
             avatar=new_evaluator.avatar,
         )
         last_record_id = await database.execute(query)

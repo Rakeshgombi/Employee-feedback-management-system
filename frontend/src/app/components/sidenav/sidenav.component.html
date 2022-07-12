@@ -56,22 +56,25 @@
     </li>
   </ul>
   <hr>
-  <div class="dropdown">
-    <button
-      class="d-flex align-items-center text-decoration-none dropdown-toggle cursor-pointer bg-dark border-none outline-none"
-      id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-      <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-      <strong>mdo</strong>
-    </button>
+  <div class="dropdown" [class]="isloggedIn? '':'d-none'">
+    <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser1"
+      data-bs-toggle="dropdown" aria-expanded="false">
+      <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle me-1">
+      {{ profile?.first_name + " " + profile?.last_name }}
+    </a>
     <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-      <li><a class="dropdown-item" routerLink="#">New project...</a></li>
       <li><a class="dropdown-item" routerLink="#">Settings</a></li>
-      <li><a class="dropdown-item" routerLink="#">Profile</a></li>
+      <li><a class="dropdown-item" [routerLink]="['/profile', LoggedInUserRole, profile?.id]">Profile</a></li>
       <li>
         <hr class="dropdown-divider">
       </li>
-      <li [class]="isloggedIn? '': 'd-none'"><a class="dropdown-item" routerLink="signout"(click)="logout()">Signout</a></li>
+      <li [class]="isloggedIn? '': 'd-none'"><a class="dropdown-item" (click)="logout()">Signout</a></li>
       <li [class]="isloggedIn? 'd-none': ''"><a class="dropdown-item" routerLink="signin">Signin</a></li>
     </ul>
+  </div>
+  <div class="dropdown"  [class]="isloggedIn? 'd-none': ''">
+    <a routerLink="signin" class="d-block link-light text-decoration-none">
+      Signin
+    </a>
   </div>
 </div>
