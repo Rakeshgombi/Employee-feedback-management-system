@@ -26,13 +26,16 @@ export class EmployeesComponent implements OnInit {
   designations = [];
   evaluators = [];
 
+
+  private passwordValidators = [];
+
   employeeForm = new FormGroup({
     employee_id: new FormControl(0, Validators.required),
     first_name: new FormControl('', Validators.required),
     middle_name: new FormControl(''),
     last_name: new FormControl('', Validators.required),
     email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+    password: new FormControl('', this.passwordValidators),
     department_id: new FormControl(0, Validators.required),
     designation_id: new FormControl(0, Validators.required),
     evaluator_id: new FormControl(0, Validators.required),
@@ -107,9 +110,9 @@ export class EmployeesComponent implements OnInit {
       .subscribe({
         next: async (res) => {
           this.departmentDetails = await res;
-          this.employeelist.forEach(element => {
+          this.employeelist?.forEach(element => {
             let department_id = element["department_id"];
-            this.departmentDetails.forEach(department => {
+            this.departmentDetails?.forEach(department => {
               if (department["id"] === department_id) {
                 this.departments.push(department);
               }
@@ -128,9 +131,9 @@ export class EmployeesComponent implements OnInit {
       .subscribe({
         next: async (res) => {
           this.designationsDetails = await res;
-          this.employeelist.forEach(element => {
+          this.employeelist?.forEach(element => {
             let designation_id = element["designation_id"];
-            this.designationsDetails.forEach(designation => {
+            this.designationsDetails?.forEach(designation => {
               if (designation["id"] === designation_id) {
                 this.designations.push(designation);
               }
@@ -149,9 +152,9 @@ export class EmployeesComponent implements OnInit {
         next: async (res) => {
           this.evaluatorsDetails = await res;
           console.log(this.evaluatorsDetails);
-          this.employeelist.forEach(element => {
+          this.employeelist?.forEach(element => {
             let evaluator_id = element["evaluator_id"];
-            this.evaluatorsDetails.forEach(evaluator => {
+            this.evaluatorsDetails?.forEach(evaluator => {
               if (evaluator["id"] === evaluator_id) {
                 this.evaluators.push(evaluator);
               }
@@ -172,6 +175,8 @@ export class EmployeesComponent implements OnInit {
   }
 
   addEmployee() {
+    
+    this.employeeForm.get('password').setValidators(this.passwordValidators.concat(Validators.required))
     this.employeeForm.reset();
     this.showAdd = true
   }
@@ -247,6 +252,8 @@ export class EmployeesComponent implements OnInit {
     this.employeeModelObject.evaluator_id = this.employeeForm.value.evaluator_id;
     this.employeeModelObject.avatar = (this.employeeForm.value.avatar ? this.employeeForm.value.avatar : '');
 
+    
+
     this.employeesService.update(this.employeeModelObject.id, this.employeeModelObject)
       .subscribe({
         next: () => {
@@ -279,11 +286,13 @@ export class EmployeesComponent implements OnInit {
     this.employeeForm.controls['middle_name'].setValue(employee.middle_name)
     this.employeeForm.controls['last_name'].setValue(employee.last_name)
     this.employeeForm.controls['email'].setValue(employee.email)
-    this.employeeForm.controls['password'].setValue(employee.password)
     this.employeeForm.controls['evaluator_id'].setValue(employee.evaluator_id)
     this.employeeForm.controls['designation_id'].setValue(employee.designation_id)
     this.employeeForm.controls['department_id'].setValue(employee.department_id)
     this.employeeModelObject.avatar = (this.employeeForm.value.avatar ? this.employeeForm.value.avatar : '');
+
+    
+    this.employeeForm.get('password').setValidators(this.passwordValidators)
   }
 
   onCloseEditEmployee() {

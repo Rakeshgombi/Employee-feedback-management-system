@@ -83,9 +83,9 @@ export class TasksComponent implements OnInit {
       .subscribe({
         next: async (res) => {
           this.employeeDetails = await res;
-          this.tasklist.forEach(element => {
+          this.tasklist?.forEach(element => {
             let employee_id = element["employee_id"];
-            this.employeeDetails.forEach(employee => {
+            this.employeeDetails?.forEach(employee => {
               if (employee["id"] === employee_id) {
                 this.employees.push(employee);
               }

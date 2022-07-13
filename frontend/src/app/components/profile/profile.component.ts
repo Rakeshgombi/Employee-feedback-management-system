@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { faBuilding, faEnvelope, faIdCard, faUser, faUserCheck, faUserGear } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faEnvelope, faIdCard, faLock, faUnlock, faUser, faUserCheck, faUserGear } from '@fortawesome/free-solid-svg-icons';
 import { NotFoundError } from 'rxjs/internal/util/NotFoundError';
 import { AppError } from '../common/app-error';
+import { PasswordValidator } from '../common/validators/password.validator';
 import { DepartmentsService } from '../services/departments.service';
 import { EmployeesService } from '../services/employees.service';
 import { EvaluatorsService } from '../services/evaluators.service';
@@ -20,10 +22,19 @@ export class ProfileComponent implements OnInit {
   faBuilding = faBuilding
   faIdCard = faIdCard
   faUserCheck = faUserCheck
+  faLock = faLock;
+  faUnlock = faUnlock
   user: any;
   role: string;
   department: any;
   evaluator: any;
+
+  passwordChange = new FormGroup({
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
+  }, [PasswordValidator.MatchValidator('password', 'confirmPassword')])
+
+
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
@@ -32,6 +43,23 @@ export class ProfileComponent implements OnInit {
     private departmentService: DepartmentsService,
   ) { }
 
+
+  get password() {
+    return this.passwordChange.get('password');
+  }
+  get confirmPassword() {
+    return this.passwordChange.get('confirmPassword');
+  }
+  get passwordMatchError() {
+    console.log(
+      this.passwordChange.getError('mismatch') &&
+      this.passwordChange.get('confirmPassword')?.touched);
+    
+    return (
+      this.passwordChange.getError('mismatch') &&
+      this.passwordChange.get('confirmPassword')?.touched
+    );
+  }
 
   getDepartment(id: number) {
     this.departmentService.getById(id)

@@ -101,9 +101,9 @@ export class EvaluationComponent implements OnInit {
           } else throw e;
         },
         complete: () => {
-          this.evaluationlist.forEach(element => {
+          this.evaluationlist?.forEach(element => {
             let task_id = element["task_id"];
-            this.taskDetails.forEach(task => {
+            this.taskDetails?.forEach(task => {
               if (task["id"] === task_id) {
                 this.tasks.push(task);
               }

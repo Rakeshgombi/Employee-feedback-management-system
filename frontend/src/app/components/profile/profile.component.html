@@ -89,7 +89,53 @@
       </div>
     </div>
   </div>
-  <div class="col-12 col-md-5 p-3 my-2 shadow">
+  <div class="col-12 col-md-5 p-3 my-2 card shadow-sm">
     <h3 class="card-title fs-3">Change Password</h3>
+    <div class="card-body">
+      <form [formGroup]="passwordChange">
+        <div class="row mb-3">
+          <div class="col-1 d-flex justify-content-around align-items-center">
+            <fa-icon [icon]="faLock" class="h1"></fa-icon>
+          </div>
+          <div class="box col-11">
+            <div class="property">
+              <h3 class="fs-6 mb-1">Enter Password*</h3>
+            </div>
+            <div class="value border-bottom">
+              <div class="mb-3">
+                <input type="password" class="form-control border-none" formControlName="password" id="password"
+                  placeholder="******" aria-label="password" autocomplete>
+                <div *ngIf="password.touched && password.invalid" class="small text-danger text-start">
+                  <div *ngIf="password.errors['required']">*Password is required</div>
+                  <div *ngIf="password.hasError('minlength')">*Minimum length of the password must be 6</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-1 d-flex justify-content-around align-items-center">
+            <fa-icon [icon]="faUnlock" class="h1"></fa-icon>
+          </div>
+          <div class="box col-11">
+            <div class="property">
+              <h3 class="fs-6 mb-1">Confirm Password*</h3>
+            </div>
+            <div class="value border-bottom">
+              <div class="mb-3">
+                <input type="password" class="form-control border-none" formControlName="confirmPassword"
+                  id="confirmPassword" placeholder="******" aria-label="confirmPassword" autocomplete>
+                <div *ngIf="confirmPassword.touched && confirmPassword.invalid" class="small text-danger text-start">
+                  <div *ngIf="confirmPassword.errors['required']">*Confirm Password is required</div>
+                  <div *ngIf="confirmPassword.errors['minlength']">*Minimum length of the password must be 6</div>
+                </div>
+                <div *ngIf="passwordMatchError" class="small text-danger text-start">*Confirm Password doesn't match
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
