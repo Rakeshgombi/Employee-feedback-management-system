@@ -20,10 +20,10 @@ class DesignationListSchemaIn(BaseModel):
 class EmployeeListSchemaIn(BaseModel):
     employee_id: int
     first_name: str
-    middle_name: str
+    middle_name: str | None = None
     last_name: str
     email: str
-    password: str
+    password: str | None = None
     department_id: int
     designation_id: int
     evaluator_id: int

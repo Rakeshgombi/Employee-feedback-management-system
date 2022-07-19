@@ -47,6 +47,7 @@ async def create_employee(new_employee: EmployeeListSchemaIn):
 
 @router.put("/employees/{id}", status_code=status.HTTP_201_CREATED, response_model=EmployeeListSchema)
 async def update_employee(id: int, new_employee: EmployeeListSchemaIn):
+    print(new_employee)
     query = EmployeeList.select().where(EmployeeList.c.id == id)
     employee = await database.fetch_one(query)
     if employee is None:
@@ -60,12 +61,15 @@ async def update_employee(id: int, new_employee: EmployeeListSchemaIn):
             middle_name=new_employee.middle_name or employee.middle_name,
             last_name=new_employee.last_name or employee.last_name,
             email=new_employee.email or employee.email,
-            password=get_password_hash(new_employee.password or employee.password),
             department_id=new_employee.department_id or employee.department_id,
             designation_id=new_employee.designation_id or employee.designation_id,
             evaluator_id=new_employee.evaluator_id or employee.evaluator_id,
             avatar=new_employee.avatar
         )
+        if new_employee.password:
+            query = query.values(password=get_password_hash(new_employee.password))
+        else:
+            query = query.values(password=employee.password)
         last_record_id = await database.execute(query)
         print(last_record_id)
         return {**new_employee.dict(), "id": last_record_id, "date_created": employee.date_created}

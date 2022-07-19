@@ -243,10 +243,10 @@ export class EmployeesComponent implements OnInit {
     this.employeeModelObject.employee_id = this.employeeForm.value.employee_id;
     this.employeeModelObject.first_name = this.employeeForm.value.first_name;
     this.employeeModelObject.last_name = this.employeeForm.value.last_name;
-    this.employeeModelObject.middle_name = this.employeeForm.value.middle_name;
+    this.employeeModelObject.middle_name = this.employeeForm.value.middle_name? this.employeeForm.value.middle_name : '';
     this.employeeModelObject.last_name = this.employeeForm.value.last_name;
     this.employeeModelObject.email = this.employeeForm.value.email;
-    this.employeeModelObject.password = this.employeeForm.value.password;
+    this.employeeModelObject.password = this.employeeForm.value.password? this.employeeForm.value.password : '';
     this.employeeModelObject.department_id = this.employeeForm.value.department_id;
     this.employeeModelObject.designation_id = this.employeeForm.value.designation_id;
     this.employeeModelObject.evaluator_id = this.employeeForm.value.evaluator_id;

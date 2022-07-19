@@ -57,9 +57,12 @@ async def update_evaluator(id: int, new_evaluator: EvaluatorListSchemaIn):
             middle_name=new_evaluator.middle_name or evaluator.middle_name,
             last_name=new_evaluator.last_name or evaluator.last_name,
             email=new_evaluator.email.lower() or evaluator.email,
-            password=get_password_hash(new_evaluator.password or evaluator.password),
             avatar=new_evaluator.avatar,
         )
+        if new_evaluator.password:
+            query = query.values(password=get_password_hash(new_evaluator.password))
+        else:
+            query = query.values(password=evaluator.password)
         last_record_id = await database.execute(query)
         return {**new_evaluator.dict(), "id": id, "date_created": evaluator.date_created}
 
