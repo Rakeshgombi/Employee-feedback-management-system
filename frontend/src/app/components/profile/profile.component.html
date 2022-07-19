@@ -4,7 +4,7 @@
     <div class="card-body">
       <div class="row mb-3">
         <div class="col-1 d-flex justify-content-around align-items-center">
-          <fa-icon [icon]="faUser" class="h1"></fa-icon>
+          <fa-icon [icon]="faUser" class="h2"></fa-icon>
         </div>
         <div class="box col-11">
           <div class="property">
@@ -18,7 +18,7 @@
 
       <div class="row mb-3">
         <div class="col-1 d-flex justify-content-around align-items-center">
-          <fa-icon [icon]="faEnvelope" class="h1"></fa-icon>
+          <fa-icon [icon]="faEnvelope" class="h2"></fa-icon>
         </div>
         <div class="box col-11">
           <div class="property">
@@ -32,7 +32,7 @@
 
       <div class="row mb-3">
         <div class="col-1 d-flex justify-content-around align-items-center">
-          <fa-icon [icon]="faUserGear" class="h1"></fa-icon>
+          <fa-icon [icon]="faUserGear" class="h2"></fa-icon>
         </div>
         <div class="box col-11">
           <div class="property">
@@ -47,7 +47,7 @@
       <div [class]="role !== 'admin'? '': 'd-none'">
         <div class="row mb-3">
           <div class="col-1 d-flex justify-content-around align-items-center">
-            <fa-icon [icon]="faIdCard" class="h1"></fa-icon>
+            <fa-icon [icon]="faIdCard" class="h2"></fa-icon>
           </div>
           <div class="box col-11">
             <div class="property">
@@ -61,7 +61,7 @@
         <div [class]="role === 'employee'? '': 'd-none'">
           <div class="row mb-3">
             <div class="col-1 d-flex justify-content-around align-items-center">
-              <fa-icon [icon]="faBuilding" class="h1"></fa-icon>
+              <fa-icon [icon]="faBuilding" class="h2"></fa-icon>
             </div>
             <div class="box col-11">
               <div class="property">
@@ -74,7 +74,7 @@
           </div>
           <div class="row mb-3">
             <div class="col-1 d-flex justify-content-around align-items-center">
-              <fa-icon [icon]="faUserCheck" class="h1"></fa-icon>
+              <fa-icon [icon]="faUserCheck" class="h2"></fa-icon>
             </div>
             <div class="box col-11">
               <div class="property">
@@ -95,7 +95,7 @@
       <form [formGroup]="passwordChange">
         <div class="row mb-3">
           <div class="col-1 d-flex justify-content-around align-items-center">
-            <fa-icon [icon]="faLock" class="h1"></fa-icon>
+            <fa-icon [icon]="faLock" class="h2"></fa-icon>
           </div>
           <div class="box col-11">
             <div class="property">
@@ -115,7 +115,7 @@
         </div>
         <div class="row mb-3">
           <div class="col-1 d-flex justify-content-around align-items-center">
-            <fa-icon [icon]="faUnlock" class="h1"></fa-icon>
+            <fa-icon [icon]="faUnlock" class="h2"></fa-icon>
           </div>
           <div class="box col-11">
             <div class="property">
@@ -134,6 +134,9 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="row mb-3">
+          <button class="btn btn-success" (click)="changePassword()" [disabled]="!passwordChange.valid">Submit</button>
         </div>
       </form>
     </div>

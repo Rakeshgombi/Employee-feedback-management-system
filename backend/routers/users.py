@@ -51,6 +51,7 @@ async def create_user(new_user: UserSchemaIn):
 
 @router.put("/users/{id}", status_code=status.HTTP_201_CREATED, response_model=UserSchema)
 async def update_user(id: int, new_user: UserSchemaIn):
+    print(new_user)
     query = Users.select().where(Users.c.id == id)
     user = await database.fetch_one(query)
     if user is None:

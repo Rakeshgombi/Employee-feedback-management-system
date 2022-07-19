@@ -4,11 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { faBuilding, faEnvelope, faIdCard, faLock, faUnlock, faUser, faUserCheck, faUserGear } from '@fortawesome/free-solid-svg-icons';
 import { NotFoundError } from 'rxjs/internal/util/NotFoundError';
 import { AppError } from '../common/app-error';
+import { BadRequestError } from '../common/bad-request-error';
 import { PasswordValidator } from '../common/validators/password.validator';
 import { DepartmentsService } from '../services/departments.service';
 import { EmployeesService } from '../services/employees.service';
 import { EvaluatorsService } from '../services/evaluators.service';
 import { UserService } from '../services/user.service';
+import { ProfileModel } from './profile.module';
 
 @Component({
   selector: 'app-profile',
@@ -28,6 +30,7 @@ export class ProfileComponent implements OnInit {
   role: string;
   department: any;
   evaluator: any;
+  profileModelObject: ProfileModel = new ProfileModel();
 
   passwordChange = new FormGroup({
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
@@ -51,10 +54,6 @@ export class ProfileComponent implements OnInit {
     return this.passwordChange.get('confirmPassword');
   }
   get passwordMatchError() {
-    console.log(
-      this.passwordChange.getError('mismatch') &&
-      this.passwordChange.get('confirmPassword')?.touched);
-    
     return (
       this.passwordChange.getError('mismatch') &&
       this.passwordChange.get('confirmPassword')?.touched
@@ -120,7 +119,7 @@ export class ProfileComponent implements OnInit {
     this.role = this.route.snapshot.paramMap.get('role')!
     if (this.role == "admin") {
       this.getUser(parseInt(id), this.userService)
-      console.log(this.user);
+      // console.log(this.user);
     }
     else if (this.role == "evaluator") {
       this.user = this.getUser(parseInt(id), this.evaluatorService)
@@ -130,4 +129,41 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+updateProfile(service:any, modelObject:any){
+  service.update(modelObject.id, modelObject)
+  .subscribe({
+    next: (res) => {
+      console.log(res);
+      alert("Profile Updated successfully");
+    },
+    error: (e: AppError) => {
+      if (e instanceof NotFoundError) {
+        alert("User Not found");
+      } else if (e instanceof BadRequestError) {
+        alert("Bad request");
+      }
+      else throw e;
+    },
+    complete: () => {
+      console.log('Complete')
+      this.passwordChange.reset();
+      this.ngOnInit()
+    }
+  })
+}
+
+  changePassword() {
+    this.profileModelObject.id = this.user.id
+    this.profileModelObject.password = this.passwordChange.value.password
+    console.log(this.profileModelObject);
+    if (this.role == "admin") {
+      this.updateProfile(this.userService, this.profileModelObject)
+    }
+    else if (this.role == "evaluator") {
+      this.updateProfile(this.evaluatorService, this.profileModelObject)
+    }
+    else if (this.role == "employee") {
+      this.updateProfile(this.employeeService, this.profileModelObject)
+    }
+  }
 }

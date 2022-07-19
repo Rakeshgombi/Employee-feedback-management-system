@@ -93,11 +93,11 @@ class TaskProgressSchemaIn(BaseModel):
 
 
 class UserSchemaIn(BaseModel):
-    first_name: str
-    last_name: str
-    email: str
-    password: str
-    avatar: str
+    first_name: str | None = ''
+    last_name: str | None = ''
+    email: str | None = ''
+    password: str | None = ''
+    avatar: str | None = ''
 
     class Config:
         orm_mode = True

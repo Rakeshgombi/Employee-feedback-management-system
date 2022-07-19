@@ -18,37 +18,37 @@
         Tasks
       </a>
     </li>
-    <li>
+    <li [class]="LoggedInUserRole !== 'employee' ? '': 'd-none'">
       <a routerLink="evaluation" class="nav-link text-secondary" routerLinkActive="text-white"
         (isActiveChange)="setHeading('Evaluation')" ariaCurrentWhenActive="page">
         Evaluation
       </a>
     </li>
-    <li>
+    <li [class]="LoggedInUserRole === 'admin' ? '': 'd-none'">
       <a routerLink="departments" class="nav-link text-secondary" routerLinkActive="text-white"
         (isActiveChange)="setHeading('Departments')" ariaCurrentWhenActive="page">
         Departments
       </a>
     </li>
-    <li>
+      <li [class]="LoggedInUserRole === 'admin' ? '': 'd-none'">
       <a routerLink="designations" class="nav-link text-secondary" routerLinkActive="text-white"
         (isActiveChange)="setHeading('Designations')">
         Designations
       </a>
     </li>
-    <li>
+    <li [class]="LoggedInUserRole === 'admin' ? '': 'd-none'">
       <a routerLink="employees" class="nav-link text-secondary" routerLinkActive="text-white"
         (isActiveChange)="setHeading('Employees')">
         Employees
       </a>
     </li>
-    <li>
+    <li [class]="LoggedInUserRole === 'admin' ? '': 'd-none'">
       <a routerLink="evaluator" class="nav-link text-secondary" routerLinkActive="text-white"
         (isActiveChange)="setHeading('Evaluators')">
         Evaluator
       </a>
     </li>
-    <li>
+    <li [class]="LoggedInUserRole === 'admin' ? '': 'd-none'">
       <a routerLink="users" class="nav-link text-secondary" routerLinkActive="text-white"
         (isActiveChange)="setHeading('User')">
         User
@@ -63,7 +63,6 @@
       {{ profile?.first_name + " " + profile?.last_name }}
     </a>
     <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-      <li><a class="dropdown-item" routerLink="#">Settings</a></li>
       <li><a class="dropdown-item" [routerLink]="['/profile', LoggedInUserRole, profile?.id]">Profile</a></li>
       <li>
         <hr class="dropdown-divider">
